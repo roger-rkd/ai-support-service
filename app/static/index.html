@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Support Service - Intelligent Support Assistant</title>
+    <title>NHS AI Health Assistant - Virtual Healthcare Support</title>
     <style>
         * {
             margin: 0;
@@ -12,22 +12,23 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f4f5;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            color: #333;
+            color: #212b32;
         }
 
-        .header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* NHS Header */
+        .nhs-header {
+            background: #005eb8;
+            color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .header-content {
+        .nhs-header-content {
             max-width: 1200px;
             margin: 0 auto;
             display: flex;
@@ -37,17 +38,30 @@
             gap: 1rem;
         }
 
-        .logo {
+        .nhs-logo {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 1rem;
             font-size: 1.5rem;
             font-weight: 700;
-            color: #667eea;
         }
 
-        .logo-icon {
-            font-size: 2rem;
+        .nhs-logo-icon {
+            font-size: 2.5rem;
+        }
+
+        .emergency-banner {
+            background: #d5281b;
+            color: white;
+            padding: 0.75rem 2rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .emergency-banner a {
+            color: white;
+            text-decoration: underline;
+            font-weight: 700;
         }
 
         .nav-links {
@@ -56,14 +70,14 @@
         }
 
         .nav-links a {
-            color: #666;
+            color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: opacity 0.3s;
         }
 
         .nav-links a:hover {
-            color: #667eea;
+            opacity: 0.8;
         }
 
         .container {
@@ -78,65 +92,89 @@
         }
 
         .hero {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 3rem;
-            text-align: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: white;
+            border-left: 5px solid #005eb8;
+            border-radius: 4px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .hero h1 {
+            font-size: 2rem;
+            color: #005eb8;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            color: #4c6272;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .disclaimer-box {
+            background: #fff4e5;
+            border-left: 4px solid #f9bf00;
+            padding: 1.25rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+        }
+
+        .disclaimer-box h3 {
+            color: #d47500;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .disclaimer-box p {
+            color: #4c6272;
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .service-card {
+            background: white;
+            border-top: 4px solid #41b6e6;
+            padding: 1.5rem;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-icon {
             font-size: 2.5rem;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
 
-        .hero p {
-            font-size: 1.1rem;
-            color: #666;
-            margin-bottom: 2rem;
+        .service-card h3 {
+            color: #005eb8;
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
         }
 
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-
-        .feature {
-            background: rgba(102, 126, 234, 0.1);
-            padding: 1.5rem;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .feature-icon {
-            font-size: 2rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature h3 {
-            font-size: 1rem;
-            color: #667eea;
-            margin-bottom: 0.5rem;
-        }
-
-        .feature p {
-            font-size: 0.9rem;
-            color: #666;
+        .service-card p {
+            color: #4c6272;
+            line-height: 1.5;
+            font-size: 0.95rem;
         }
 
         .chat-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            background: white;
+            border-radius: 4px;
             padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             display: flex;
             flex-direction: column;
             height: 600px;
@@ -147,20 +185,20 @@
             align-items: center;
             gap: 1rem;
             padding-bottom: 1.5rem;
-            border-bottom: 2px solid #f0f0f0;
+            border-bottom: 2px solid #e8edee;
             margin-bottom: 1.5rem;
         }
 
         .chat-header h2 {
             font-size: 1.5rem;
-            color: #333;
+            color: #005eb8;
         }
 
         .status-indicator {
             width: 12px;
             height: 12px;
             border-radius: 50%;
-            background: #4ade80;
+            background: #78be20;
             animation: pulse 2s infinite;
         }
 
@@ -169,27 +207,29 @@
             50% { opacity: 0.5; }
         }
 
-        .example-questions {
-            display: flex;
-            flex-wrap: wrap;
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 0.75rem;
             margin-bottom: 1.5rem;
         }
 
-        .example-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
+        .action-btn {
+            background: white;
+            border: 2px solid #005eb8;
+            color: #005eb8;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.2s;
+            font-weight: 600;
+            text-align: left;
         }
 
-        .example-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        .action-btn:hover {
+            background: #005eb8;
+            color: white;
         }
 
         .messages {
@@ -200,7 +240,7 @@
             flex-direction: column;
             gap: 1rem;
             background: #f8f9fa;
-            border-radius: 12px;
+            border-radius: 4px;
             margin-bottom: 1.5rem;
         }
 
@@ -237,24 +277,24 @@
         }
 
         .message.user .message-avatar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #005eb8;
         }
 
         .message.assistant .message-avatar {
-            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            background: #41b6e6;
         }
 
         .message-content {
             background: white;
             padding: 1rem 1.25rem;
-            border-radius: 18px;
-            max-width: 70%;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-radius: 8px;
+            max-width: 75%;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
             line-height: 1.6;
         }
 
         .message.user .message-content {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #005eb8;
             color: white;
         }
 
@@ -281,10 +321,13 @@
             line-height: 1.5;
         }
 
-        .message-content br {
-            display: block;
-            content: "";
-            margin: 0.25rem 0;
+        .ai-disclaimer {
+            background: #fff4e5;
+            border-left: 3px solid #f9bf00;
+            padding: 0.75rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            color: #4c6272;
         }
 
         .loading {
@@ -297,7 +340,7 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #667eea;
+            background: #005eb8;
             animation: bounce 1.4s infinite ease-in-out;
         }
 
@@ -317,32 +360,31 @@
         .input-container input {
             flex: 1;
             padding: 1rem 1.5rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 25px;
+            border: 2px solid #e8edee;
+            border-radius: 4px;
             font-size: 1rem;
             outline: none;
             transition: border-color 0.3s;
         }
 
         .input-container input:focus {
-            border-color: #667eea;
+            border-color: #005eb8;
         }
 
         .send-btn {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #005eb8;
             color: white;
             border: none;
             padding: 1rem 2rem;
-            border-radius: 25px;
+            border-radius: 4px;
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: background 0.2s;
         }
 
         .send-btn:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+            background: #003087;
         }
 
         .send-btn:disabled {
@@ -351,98 +393,108 @@
         }
 
         .info-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            background: white;
+            border-radius: 4px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .info-section h2 {
-            text-align: center;
-            font-size: 2rem;
+            color: #005eb8;
             margin-bottom: 2rem;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 1.75rem;
+            text-align: center;
         }
 
         .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 4px;
+            border-top: 3px solid #78be20;
+        }
+
+        .info-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            color: #005eb8;
+            margin-bottom: 0.75rem;
+            font-size: 1.25rem;
+        }
+
+        .info-card p {
+            color: #4c6272;
+            line-height: 1.6;
+        }
+
+        .info-card a {
+            color: #005eb8;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .nhs-footer {
+            background: #212b32;
+            color: #aeb7bd;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 2rem;
         }
 
-        .info-card {
-            background: rgba(102, 126, 234, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
-        }
-
-        .info-icon {
-            font-size: 3rem;
-            text-align: center;
+        .footer-section h4 {
+            color: white;
             margin-bottom: 1rem;
         }
 
-        .info-card h3 {
-            font-size: 1.25rem;
-            color: #667eea;
-            margin-bottom: 0.75rem;
-            text-align: center;
+        .footer-section ul {
+            list-style: none;
         }
 
-        .info-card p {
-            color: #666;
-            line-height: 1.6;
-            text-align: center;
+        .footer-section li {
+            margin-bottom: 0.5rem;
         }
 
-        .info-card a {
-            color: #667eea;
-            text-decoration: underline;
-            font-weight: 500;
-        }
-
-        .info-card code {
-            background: rgba(102, 126, 234, 0.1);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-family: 'Courier New', monospace;
-            font-size: 0.9rem;
-        }
-
-        .footer {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1.5rem 2rem;
-            text-align: center;
-            color: #666;
-        }
-
-        .footer a {
-            color: #667eea;
+        .footer-section a {
+            color: #aeb7bd;
             text-decoration: none;
-            font-weight: 500;
+            transition: color 0.2s;
         }
 
-        .footer strong {
-            color: #667eea;
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid #3a4651;
+            text-align: center;
+            color: #aeb7bd;
         }
 
         @media (max-width: 768px) {
             .hero h1 {
-                font-size: 2rem;
+                font-size: 1.5rem;
             }
 
-            .features {
+            .services-grid,
+            .quick-actions {
                 grid-template-columns: 1fr;
             }
 
@@ -453,80 +505,90 @@
             .message-content {
                 max-width: 85%;
             }
-
-            .example-questions {
-                flex-direction: column;
-            }
-
-            .example-btn {
-                width: 100%;
-            }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-content">
-            <div class="logo">
-                <span class="logo-icon">🤖</span>
-                <span>AI Support Service</span>
+    <div class="emergency-banner">
+        ⚠️ <strong>Emergency?</strong> Call 999 immediately | <strong>Urgent medical help:</strong> Call NHS 24 on <a href="tel:111">111</a>
+    </div>
+
+    <header class="nhs-header">
+        <div class="nhs-header-content">
+            <div class="nhs-logo">
+                <span class="nhs-logo-icon">🏥</span>
+                <span>NHS AI Health Assistant</span>
             </div>
             <nav class="nav-links">
-                <a href="#chat">Chat</a>
+                <a href="#chat">Virtual Assistant</a>
+                <a href="#services">Services</a>
                 <a href="#about">About</a>
-                <a href="/docs" target="_blank">API Docs</a>
-                <a href="/metrics" target="_blank">Metrics</a>
+                <a href="/docs" target="_blank">For Developers</a>
             </nav>
         </div>
     </header>
 
     <div class="container">
         <section class="hero">
-            <h1>Intelligent Support Assistant</h1>
-            <p>Get instant answers to your questions using advanced RAG (Retrieval Augmented Generation) technology powered by Groq AI and FAISS vector search.</p>
+            <h1>Welcome to Your Virtual Health Assistant</h1>
+            <p class="hero-subtitle">Get instant support for common health questions, find your nearest GP, book appointments, and receive guidance on managing minor ailments at home.</p>
 
-            <div class="features">
-                <div class="feature">
-                    <div class="feature-icon">⚡</div>
-                    <h3>Fast Responses</h3>
-                    <p>Powered by Groq's lightning-fast LLM inference</p>
+            <div class="disclaimer-box">
+                <h3>⚕️ Important Medical Disclaimer</h3>
+                <p><strong>This is an AI assistant providing general health information only.</strong> It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your GP or other qualified health provider with any questions about your medical condition. In case of emergency, call 999 or visit your nearest A&E.</p>
+            </div>
+
+            <div class="services-grid" id="services">
+                <div class="service-card">
+                    <div class="service-icon">🩺</div>
+                    <h3>Symptom Checker</h3>
+                    <p>Describe your symptoms and get information about possible causes and home remedies for minor conditions.</p>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Accurate Answers</h3>
-                    <p>RAG pipeline retrieves relevant context for precise responses</p>
+                <div class="service-card">
+                    <div class="service-icon">📅</div>
+                    <h3>Appointments</h3>
+                    <p>Get guidance on booking GP appointments, specialist consultations, and NHS services.</p>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">🔍</div>
-                    <h3>Smart Search</h3>
-                    <p>FAISS vector search finds the most relevant information</p>
+                <div class="service-card">
+                    <div class="service-icon">📍</div>
+                    <h3>Find Services</h3>
+                    <p>Locate your nearest GP practice, pharmacy, hospital, or walk-in centre with contact information.</p>
                 </div>
-                <div class="feature">
-                    <div class="feature-icon">📚</div>
-                    <h3>Knowledge Base</h3>
-                    <p>Trained on comprehensive support documentation</p>
+                <div class="service-card">
+                    <div class="service-icon">💊</div>
+                    <h3>Home Remedies</h3>
+                    <p>Learn about self-care treatments for common conditions like colds, headaches, and minor injuries.</p>
                 </div>
             </div>
         </section>
 
         <section class="chat-container" id="chat">
             <div class="chat-header">
-                <h2>Ask a Question</h2>
+                <h2>Chat with AI Health Assistant</h2>
                 <div class="status-indicator"></div>
             </div>
 
-            <div class="example-questions">
-                <button class="example-btn" onclick="askQuestion('How do I reset my password?')">🔑 Reset Password</button>
-                <button class="example-btn" onclick="askQuestion('How can I update my billing information?')">💳 Update Billing</button>
-                <button class="example-btn" onclick="askQuestion('What are your support hours?')">⏰ Support Hours</button>
-                <button class="example-btn" onclick="askQuestion('How do I delete my account?')">🗑️ Delete Account</button>
+            <div class="quick-actions">
+                <button class="action-btn" onclick="askQuestion('I have a headache and fever. What should I do?')">🤒 I have a fever</button>
+                <button class="action-btn" onclick="askQuestion('How can I book a GP appointment?')">📅 Book appointment</button>
+                <button class="action-btn" onclick="askQuestion('What are home remedies for a cold?')">🤧 Cold remedies</button>
+                <button class="action-btn" onclick="askQuestion('Find my nearest GP practice')">📍 Find nearest GP</button>
             </div>
 
             <div class="messages" id="messages">
                 <div class="message assistant">
-                    <div class="message-avatar">🤖</div>
+                    <div class="message-avatar">🏥</div>
                     <div class="message-content">
-                        Hello! I'm your AI Support Assistant. I can help you with questions about passwords, accounts, billing, technical issues, and more. Try asking me a question or click one of the examples above!
+                        <p>Hello! I'm your NHS AI Health Assistant. I'm here to help you with:</p>
+                        <ul>
+                            <li>Understanding common symptoms</li>
+                            <li>Home remedies for minor ailments</li>
+                            <li>Booking appointments</li>
+                            <li>Finding NHS services near you</li>
+                        </ul>
+                        <div class="ai-disclaimer">
+                            <strong>Remember:</strong> I'm an AI providing general information only. For serious symptoms or emergencies, please call 999 or contact your GP directly.
+                        </div>
                     </div>
                 </div>
             </div>
@@ -535,7 +597,7 @@
                 <input
                     type="text"
                     id="questionInput"
-                    placeholder="Type your question here..."
+                    placeholder="Describe your symptoms or ask a health question..."
                     onkeypress="if(event.key === 'Enter') sendMessage()"
                 >
                 <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
@@ -543,46 +605,83 @@
         </section>
 
         <section class="info-section" id="about">
-            <h2>About This Service</h2>
+            <h2>How Can We Help You?</h2>
             <div class="info-grid">
                 <div class="info-card">
                     <div class="info-icon">🤖</div>
-                    <h3>What It Does</h3>
-                    <p>This AI-powered chatbot answers support questions by searching through your company's FAQ documents (in .txt or .pdf format) and generating accurate, contextual responses.</p>
+                    <h3>AI-Powered Support</h3>
+                    <p>Our AI assistant uses advanced natural language processing to understand your health concerns and provide evidence-based information from NHS resources.</p>
                 </div>
                 <div class="info-card">
-                    <div class="info-icon">📊</div>
-                    <h3>Metrics Dashboard</h3>
-                    <p>The <a href="/metrics" target="_blank">Metrics</a> page shows real-time performance data like request counts, response times, and system health - useful for monitoring service quality.</p>
+                    <div class="info-icon">🔒</div>
+                    <h3>Safe & Confidential</h3>
+                    <p>Your conversations are private and secure. We follow NHS data protection standards to keep your health information safe.</p>
                 </div>
                 <div class="info-card">
-                    <div class="info-icon">🔌</div>
-                    <h3>API Integration</h3>
-                    <p>Developers can integrate this service into their apps using the <a href="/docs" target="_blank">API Documentation</a>. Send questions programmatically and receive AI-generated answers.</p>
+                    <div class="info-icon">📚</div>
+                    <h3>NHS-Verified Information</h3>
+                    <p>All medical information comes from trusted NHS sources and clinical guidelines to ensure accuracy and reliability.</p>
                 </div>
                 <div class="info-card">
-                    <div class="info-icon">📄</div>
-                    <h3>Adding Your FAQs</h3>
-                    <p>Place your company's FAQ files (.txt or .pdf) in the <code>/data</code> folder. The system automatically learns from them and uses that knowledge to answer questions.</p>
+                    <div class="info-icon">⚕️</div>
+                    <h3>When to See a Doctor</h3>
+                    <p>The AI will guide you on when to seek professional medical help. Call <a href="tel:111">NHS 24 (111)</a> for urgent advice or <a href="tel:999">999</a> for emergencies.</p>
                 </div>
             </div>
         </section>
     </div>
 
-    <footer class="footer">
-        <p>Made with ❤️ by <strong>Rohit Kumar Dubey</strong></p>
-        <p>Powered by <a href="https://groq.com" target="_blank">Groq</a>, <a href="https://www.sbert.net" target="_blank">Sentence Transformers</a>, and <a href="https://faiss.ai" target="_blank">FAISS</a></p>
-        <p>
-            <a href="https://github.com/roger-rkd/ai-support-service" target="_blank">GitHub</a> |
-            <a href="https://huggingface.co/spaces/dubey-codes/ai-support-service" target="_blank">Hugging Face</a> |
-            <a href="/docs" target="_blank">API Documentation</a>
-        </p>
+    <footer class="nhs-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Emergency Contacts</h4>
+                <ul>
+                    <li><strong>Emergency:</strong> <a href="tel:999">999</a></li>
+                    <li><strong>NHS 24:</strong> <a href="tel:111">111</a></li>
+                    <li><strong>Samaritans:</strong> <a href="tel:116123">116 123</a></li>
+                    <li><strong>Childline:</strong> <a href="tel:08001111">0800 1111</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>NHS Services</h4>
+                <ul>
+                    <li><a href="https://www.nhsinform.scot" target="_blank">NHS Inform</a></li>
+                    <li><a href="https://www.nhs24.scot" target="_blank">NHS 24</a></li>
+                    <li><a href="#">Find a GP</a></li>
+                    <li><a href="#">Book Appointment</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>About This Service</h4>
+                <ul>
+                    <li><a href="#about">How it Works</a></li>
+                    <li><a href="/metrics" target="_blank">Service Status</a></li>
+                    <li><a href="/docs" target="_blank">API Documentation</a></li>
+                    <li><a href="https://github.com/roger-rkd/ai-support-service" target="_blank">Source Code</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Medical Disclaimer</a></li>
+                    <li><a href="#">Accessibility</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>Made with ❤️ by <strong>Rohit Kumar Dubey</strong></p>
+            <p>Powered by Groq AI, Sentence Transformers, and FAISS | <a href="https://huggingface.co/spaces/dubey-codes/ai-support-service" target="_blank">Hugging Face Demo</a></p>
+            <p style="margin-top: 1rem; font-size: 0.85rem;">⚠️ This AI assistant provides general health information only and is not a substitute for professional medical advice.</p>
+        </div>
     </footer>
 
     <script>
         const messagesContainer = document.getElementById('messages');
         const questionInput = document.getElementById('questionInput');
         const sendBtn = document.getElementById('sendBtn');
+        let messageCount = 0;
 
         async function sendMessage() {
             const question = questionInput.value.trim();
@@ -621,13 +720,22 @@
                 // Remove loading indicator
                 removeLoadingMessage(loadingId);
 
-                // Add assistant response
-                addMessage(data.answer, 'assistant');
+                // Add assistant response with disclaimer
+                addMessage(data.answer, 'assistant', true);
+
+                messageCount++;
+
+                // Show disclaimer reminder every 3 messages
+                if (messageCount % 3 === 0) {
+                    setTimeout(() => {
+                        addDisclaimerReminder();
+                    }, 500);
+                }
 
             } catch (error) {
                 console.error('Error:', error);
                 removeLoadingMessage(loadingId);
-                addMessage('Sorry, I encountered an error while processing your question. Please try again.', 'assistant');
+                addMessage('I apologize, but I\'m having trouble processing your request right now. If you have an urgent medical concern, please call NHS 24 on 111 or 999 in an emergency.', 'assistant', true);
             } finally {
                 // Re-enable input
                 questionInput.disabled = false;
@@ -727,13 +835,13 @@
             return formatted.join('');
         }
 
-        function addMessage(text, type) {
+        function addMessage(text, type, withDisclaimer = false) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message ${type}`;
 
             const avatar = document.createElement('div');
             avatar.className = 'message-avatar';
-            avatar.textContent = type === 'user' ? '👤' : '🤖';
+            avatar.textContent = type === 'user' ? '👤' : '🏥';
 
             const content = document.createElement('div');
             content.className = 'message-content';
@@ -741,9 +849,36 @@
             // Format the message for better readability
             if (type === 'assistant') {
                 content.innerHTML = formatMessage(text);
+
+                // Add disclaimer for AI responses
+                if (withDisclaimer) {
+                    const disclaimer = document.createElement('div');
+                    disclaimer.className = 'ai-disclaimer';
+                    disclaimer.innerHTML = '<strong>Note:</strong> This is AI-generated general advice. For serious concerns or if symptoms worsen, please contact your GP or call NHS 24 on 111.';
+                    content.appendChild(disclaimer);
+                }
             } else {
                 content.textContent = text;
             }
+
+            messageDiv.appendChild(avatar);
+            messageDiv.appendChild(content);
+
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function addDisclaimerReminder() {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message assistant';
+
+            const avatar = document.createElement('div');
+            avatar.className = 'message-avatar';
+            avatar.textContent = '⚕️';
+
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            content.innerHTML = '<div class="ai-disclaimer"><strong>Friendly Reminder:</strong> I\'m an AI assistant providing general health information. If you\'re experiencing severe symptoms, worsening conditions, or have concerns about your health, please:<ul><li>Call your GP surgery directly</li><li>Call NHS 24 on <strong>111</strong> for urgent advice</li><li>Call <strong>999</strong> for life-threatening emergencies</li></ul>I\'m here to help with general questions, but your health professional knows best!</div>';
 
             messageDiv.appendChild(avatar);
             messageDiv.appendChild(content);
@@ -759,7 +894,7 @@
 
             const avatar = document.createElement('div');
             avatar.className = 'message-avatar';
-            avatar.textContent = '🤖';
+            avatar.textContent = '🏥';
 
             const content = document.createElement('div');
             content.className = 'message-content';

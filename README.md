@@ -17,35 +17,44 @@ tags:
   - chatbot
 ---
 
-# 🤖 AI Support Service with RAG Pipeline
+# 🏥 NHS AI Health Assistant with RAG Pipeline
 
-> **An intelligent AI chatbot that answers customer support questions by learning from your company's FAQ documents**
+> **An intelligent NHS-style virtual health assistant that provides medical information, symptom guidance, and healthcare support using AI**
 
-Transform your customer support with an AI assistant that reads your documentation (PDF & TXT files) and provides instant, accurate answers 24/7.
+Transform healthcare support with an empathetic AI assistant that provides evidence-based medical information, helps with symptoms, guides patients to appropriate care, and offers 24/7 health guidance.
 
 **🚀 Live Demo**: [https://huggingface.co/spaces/dubey-codes/ai-support-service](https://huggingface.co/spaces/dubey-codes/ai-support-service)
 
 **👨‍💻 Author**: Made with ❤️ by **Rohit Kumar Dubey**
 **📦 Repository**: [GitHub](https://github.com/roger-rkd/ai-support-service)
 
+**⚕️ Medical Disclaimer**: This AI provides general health information only and is NOT a substitute for professional medical advice, diagnosis, or treatment. Always consult qualified healthcare professionals for medical concerns.
+
 ---
 
 ## ✨ Features
 
-### Core Capabilities
-- **📄 PDF & TXT Support**: Upload your FAQ documents in PDF or text format
-- **🤖 Smart AI Responses**: Powered by Groq's Llama 3.3 70B model for fast, accurate answers
-- **🔍 Semantic Search**: FAISS vector search understands meaning, not just keywords
-- **💬 Interactive Chat UI**: Beautiful, user-friendly web interface
-- **📊 Real-time Metrics**: Monitor performance with Prometheus metrics
-- **🚀 Production-Ready**: Docker support, Kubernetes manifests, health checks
+### Healthcare Capabilities
+- **🩺 Symptom Checker**: Describe symptoms and receive guidance on possible causes and home remedies
+- **💊 Home Remedies**: Evidence-based self-care advice for common ailments
+- **📅 Appointment Guidance**: Help with booking GP appointments and finding NHS services
+- **📍 GP Finder**: Locate nearest GP practices, pharmacies, and hospitals
+- **🚨 Emergency Triage**: Clear guidance on when to call 999, NHS 24 (111), or see a GP
+- **⚕️ Safety-First Approach**: Regular disclaimers and appropriate medical referrals
 
-### Technical Features
-- **RAG Pipeline**: Retrieval Augmented Generation for contextual responses
-- **Vector Embeddings**: Sentence Transformers for high-quality text understanding
-- **RESTful API**: FastAPI with automatic OpenAPI documentation
-- **Observability**: Prometheus metrics, request tracking, latency monitoring
-- **CORS Enabled**: Ready for frontend integration
+### AI & Technical Features
+- **🤖 Empathetic AI**: Warm, caring tone mimicking NHS healthcare professionals
+- **📚 NHS-Verified Information**: Based on NHS clinical guidelines and trusted sources
+- **🔍 Smart Search**: FAISS vector search for accurate medical information retrieval
+- **💬 Professional UI**: NHS-styled interface with emergency contact banner
+- **📊 Real-time Monitoring**: Prometheus metrics and Grafana dashboards
+- **🚀 Production-Ready**: Docker, Kubernetes, full observability stack
+
+### Safety & Compliance
+- **Automatic Disclaimers**: Every 3 messages reminds users this is AI, not a doctor
+- **Emergency Detection**: Recognizes serious symptoms and advises calling 999
+- **Appropriate Referrals**: Guides to GP, NHS 24, or A&E based on severity
+- **Evidence-Based**: All advice from NHS resources and clinical guidelines
 
 ## 📁 Project Structure
 
@@ -171,17 +180,28 @@ The service will be available at:
 
 ---
 
-## 💬 Using the Chat Interface
+## 💬 Using the NHS AI Health Assistant
 
 1. Open http://localhost:8000 in your browser
-2. Try the example questions or type your own
-3. Get instant AI-powered answers based on your FAQ documents
+2. Describe your symptoms or ask a health question
+3. Get warm, empathetic responses with medical guidance
+4. Receive appropriate safety advice and referrals
 
-**Example Questions:**
-- "How do I reset my password?"
-- "What are your billing policies?"
-- "How can I update my account information?"
-- "What are your support hours?"
+**Example Health Questions:**
+- "I have a headache and fever. What should I do?"
+- "What are good home remedies for a cold?"
+- "How can I book a GP appointment?"
+- "Find my nearest GP practice"
+- "When should I go to A&E vs call NHS 24?"
+- "Home remedies for sore throat"
+- "What to do for minor burns?"
+
+**The AI will:**
+- Provide empathetic, caring responses
+- Give evidence-based medical information
+- Recommend appropriate level of care (self-care, GP, NHS 24, 999)
+- Include safety disclaimers regularly
+- Never diagnose or prescribe - only provide general information
 
 ---
 
