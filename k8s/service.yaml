@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-support-service
+  labels:
+    app: ai-support-service
+spec:
+  type: ClusterIP
+  selector:
+    app: ai-support-service
+  ports:
+  - port: 80
+    targetPort: 8000
+    protocol: TCP
+    name: http

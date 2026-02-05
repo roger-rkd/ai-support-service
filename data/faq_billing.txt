@@ -1,0 +1,51 @@
+Billing and Payment Information
+
+Subscription Plans:
+We offer three subscription tiers:
+- Basic Plan: $9.99/month - Essential features for individuals
+- Pro Plan: $29.99/month - Advanced features for professionals
+- Enterprise Plan: Custom pricing - Full features with dedicated support
+
+Payment Methods:
+We accept the following payment methods:
+- Credit Cards (Visa, Mastercard, American Express)
+- Debit Cards
+- PayPal
+- Bank Transfer (for Enterprise plans)
+
+Billing Cycle:
+- Monthly subscriptions are billed on the same day each month
+- Annual subscriptions save 20% and are billed once per year
+- You can change your billing cycle anytime in your account settings
+
+Updating Payment Information:
+1. Log in to your account
+2. Go to Settings > Billing > Payment Methods
+3. Click "Add Payment Method" or "Update" next to existing method
+4. Enter your new payment information
+5. Click "Save"
+
+Viewing Invoices:
+- All invoices are available in Settings > Billing > Invoice History
+- You can download invoices as PDF files
+- Invoices are also emailed to your registered email address
+
+Canceling Subscription:
+1. Go to Settings > Billing > Subscription
+2. Click "Cancel Subscription"
+3. Select a reason for cancellation (optional)
+4. Confirm cancellation
+5. Your subscription will remain active until the end of the current billing period
+
+Refund Policy:
+- We offer a 30-day money-back guarantee for new subscriptions
+- Refunds are processed within 5-7 business days
+- To request a refund, contact our support team with your order number
+- Annual subscriptions are prorated if canceled mid-year
+
+Failed Payment:
+If a payment fails:
+- We'll automatically retry after 3 days
+- You'll receive email notifications
+- Your account will be suspended after 7 days of failed payment
+- Update your payment method to restore access

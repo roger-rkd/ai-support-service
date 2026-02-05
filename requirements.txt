@@ -1,0 +1,22 @@
+# FastAPI and server
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+
+# Pydantic for data validation
+pydantic==2.10.5
+pydantic-settings==2.7.1
+
+# Additional dependencies
+python-multipart==0.0.20
+python-dotenv==1.0.1
+
+# RAG dependencies
+sentence-transformers==3.3.1
+faiss-cpu==1.9.0.post1
+groq==0.13.0
+
+# Observability
+prometheus-client==0.21.1
+
+# Optional: for production deployment (Unix only)
+# gunicorn==23.0.0

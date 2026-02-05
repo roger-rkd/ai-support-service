@@ -1,0 +1,218 @@
+{
+  "dashboard": {
+    "title": "AI Support Service - Metrics",
+    "timezone": "browser",
+    "schemaVersion": 38,
+    "refresh": "10s",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Request Rate",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(ai_support_requests_total[5m])",
+            "legendFormat": "{{status}} - {{endpoint}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"label": "requests/sec", "format": "short"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Success Rate",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(ai_support_requests_total{status=\"success\"}[5m]) / rate(ai_support_requests_total[5m])",
+            "legendFormat": "Success Rate",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"label": "percentage", "format": "percentunit", "max": 1, "min": 0},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 3,
+        "title": "Request Latency (Percentiles)",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.50, rate(ai_support_request_latency_seconds_bucket[5m]))",
+            "legendFormat": "p50",
+            "refId": "A"
+          },
+          {
+            "expr": "histogram_quantile(0.95, rate(ai_support_request_latency_seconds_bucket[5m]))",
+            "legendFormat": "p95",
+            "refId": "B"
+          },
+          {
+            "expr": "histogram_quantile(0.99, rate(ai_support_request_latency_seconds_bucket[5m]))",
+            "legendFormat": "p99",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"label": "seconds", "format": "s"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 4,
+        "title": "RAG Pipeline Latency",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 8, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(ai_support_rag_retrieval_latency_seconds_sum[5m]) / rate(ai_support_rag_retrieval_latency_seconds_count[5m])",
+            "legendFormat": "Retrieval",
+            "refId": "A"
+          },
+          {
+            "expr": "rate(ai_support_rag_generation_latency_seconds_sum[5m]) / rate(ai_support_rag_generation_latency_seconds_count[5m])",
+            "legendFormat": "Generation",
+            "refId": "B"
+          },
+          {
+            "expr": "rate(ai_support_rag_pipeline_latency_seconds_sum[5m]) / rate(ai_support_rag_pipeline_latency_seconds_count[5m])",
+            "legendFormat": "Total",
+            "refId": "C"
+          }
+        ],
+        "yaxes": [
+          {"label": "seconds", "format": "s"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 5,
+        "title": "Error Rate by Type",
+        "type": "graph",
+        "gridPos": {"x": 0, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(ai_support_request_failures_total[5m])",
+            "legendFormat": "{{error_type}}",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"label": "errors/sec", "format": "short"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 6,
+        "title": "Documents Retrieved per Query",
+        "type": "graph",
+        "gridPos": {"x": 12, "y": 16, "w": 12, "h": 8},
+        "targets": [
+          {
+            "expr": "rate(ai_support_documents_retrieved_sum[5m]) / rate(ai_support_documents_retrieved_count[5m])",
+            "legendFormat": "Average Documents",
+            "refId": "A"
+          }
+        ],
+        "yaxes": [
+          {"label": "documents", "format": "short"},
+          {"format": "short"}
+        ]
+      },
+      {
+        "id": 7,
+        "title": "Total Requests",
+        "type": "stat",
+        "gridPos": {"x": 0, "y": 24, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(ai_support_requests_total)",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        }
+      },
+      {
+        "id": 8,
+        "title": "Current Success Rate",
+        "type": "stat",
+        "gridPos": {"x": 6, "y": 24, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "rate(ai_support_requests_total{status=\"success\"}[5m]) / rate(ai_support_requests_total[5m])",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "unit": "percentunit"
+        }
+      },
+      {
+        "id": 9,
+        "title": "P95 Latency",
+        "type": "stat",
+        "gridPos": {"x": 12, "y": 24, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(ai_support_request_latency_seconds_bucket[5m]))",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          },
+          "unit": "s"
+        }
+      },
+      {
+        "id": 10,
+        "title": "Total Errors",
+        "type": "stat",
+        "gridPos": {"x": 18, "y": 24, "w": 6, "h": 4},
+        "targets": [
+          {
+            "expr": "sum(ai_support_request_failures_total)",
+            "refId": "A"
+          }
+        ],
+        "options": {
+          "reduceOptions": {
+            "values": false,
+            "calcs": ["lastNotNull"]
+          }
+        },
+        "fieldConfig": {
+          "defaults": {
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {"value": 0, "color": "green"},
+                {"value": 10, "color": "yellow"},
+                {"value": 100, "color": "red"}
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: ai-support-service
+  labels:
+    app: ai-support-service
+    release: prometheus  # Match your Prometheus Operator release label
+spec:
+  selector:
+    matchLabels:
+      app: ai-support-service
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s
+    scrapeTimeout: 10s
