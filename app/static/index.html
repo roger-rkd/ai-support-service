@@ -172,8 +172,21 @@
         }
 
         .service-icon {
-            font-size: 2.5rem;
+            width: 80px;
+            height: 80px;
             margin-bottom: 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e8f4fc 0%, #d0e8f5 100%);
+            box-shadow: 0 4px 8px rgba(0, 94, 184, 0.1);
+        }
+
+        .service-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: #005eb8;
         }
 
         .service-card h3 {
@@ -352,15 +365,17 @@
 
         .message-content strong,
         .message-content b {
-            color: #005eb8;
+            color: #212b32;
             font-weight: 700;
         }
 
-        .message-content .keyword {
-            background: rgba(0, 94, 184, 0.1);
-            padding: 0.1rem 0.3rem;
-            border-radius: 3px;
+        .message-content a {
+            color: #005eb8;
+            text-decoration: underline;
             font-weight: 600;
+        }
+
+        .message-content a:hover {
             color: #003087;
         }
 
@@ -566,7 +581,6 @@
                 <a href="#chat">Virtual Assistant</a>
                 <a href="#services">Services</a>
                 <a href="#about">About</a>
-                <a href="/docs" target="_blank">For Developers</a>
             </nav>
         </div>
     </header>
@@ -583,22 +597,38 @@
 
             <div class="services-grid" id="services">
                 <div class="service-card" onclick="scrollToChat('I have symptoms I\'d like to check')">
-                    <div class="service-icon">🩺</div>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.2.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/>
+                        </svg>
+                    </div>
                     <h3>Symptom Checker</h3>
                     <p>Describe your symptoms and get information about possible causes and home remedies for minor conditions.</p>
                 </div>
                 <div class="service-card" onclick="scrollToChat('How can I book a GP appointment?')">
-                    <div class="service-icon">📅</div>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm-8 4H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/>
+                        </svg>
+                    </div>
                     <h3>Appointments</h3>
                     <p>Get guidance on booking GP appointments, specialist consultations, and NHS services.</p>
                 </div>
                 <div class="service-card" onclick="scrollToChat('Find my nearest GP practice')">
-                    <div class="service-icon">📍</div>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
                     <h3>Find Services</h3>
                     <p>Locate your nearest GP practice, pharmacy, hospital, or walk-in centre with contact information.</p>
                 </div>
                 <div class="service-card" onclick="scrollToChat('What are home remedies I can use?')">
-                    <div class="service-icon">💊</div>
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 3h12v2H6zm11 3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-1 9h-2.5v2.5h-3V15H8v-3h2.5V9.5h3V12H16v3z"/>
+                        </svg>
+                    </div>
                     <h3>Home Remedies</h3>
                     <p>Learn about self-care treatments for common conditions like colds, headaches, and minor injuries.</p>
                 </div>
@@ -699,17 +729,16 @@
                 <ul>
                     <li><a href="#about">How it Works</a></li>
                     <li><a href="/metrics" target="_blank">Service Status</a></li>
-                    <li><a href="/docs" target="_blank">API Documentation</a></li>
                     <li><a href="https://github.com/roger-rkd/ai-support-service" target="_blank">Source Code</a></li>
                 </ul>
             </div>
             <div class="footer-section">
-                <h4>Legal</h4>
+                <h4>For Developers</h4>
                 <ul>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms of Use</a></li>
-                    <li><a href="#">Medical Disclaimer</a></li>
-                    <li><a href="#">Accessibility</a></li>
+                    <li><a href="/docs" target="_blank">API Documentation</a></li>
+                    <li><a href="/api" target="_blank">API Info</a></li>
+                    <li><a href="/metrics" target="_blank">Prometheus Metrics</a></li>
+                    <li><a href="https://github.com/roger-rkd/ai-support-service" target="_blank">GitHub Repository</a></li>
                 </ul>
             </div>
         </div>
@@ -800,6 +829,16 @@
                 return str.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
             };
 
+            // Convert URLs to clickable links
+            const processLinks = (str) => {
+                // Match URLs starting with http:// or https:// or www.
+                const urlPattern = /(https?:\/\/[^\s<]+|www\.[^\s<]+)/g;
+                return str.replace(urlPattern, (url) => {
+                    const href = url.startsWith('www.') ? 'https://' + url : url;
+                    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+                });
+            };
+
             // Split into lines
             let lines = text.split('\n');
             let formatted = [];
@@ -837,7 +876,7 @@
                         inList = true;
                         listType = 'numbered';
                     }
-                    const itemText = processBold(escapeHtml(numberedMatch[2]));
+                    const itemText = processLinks(processBold(escapeHtml(numberedMatch[2])));
                     listItems.push('<li>' + itemText + '</li>');
                     continue;
                 }
@@ -853,7 +892,7 @@
                         inList = true;
                         listType = 'bullet';
                     }
-                    const itemText = processBold(escapeHtml(bulletMatch[1]));
+                    const itemText = processLinks(processBold(escapeHtml(bulletMatch[1])));
                     listItems.push('<li>' + itemText + '</li>');
                     continue;
                 }
@@ -870,7 +909,7 @@
                     listType = null;
                 }
 
-                const processedLine = processBold(escapeHtml(line));
+                const processedLine = processLinks(processBold(escapeHtml(line)));
                 formatted.push('<p>' + processedLine + '</p>');
             }
 
