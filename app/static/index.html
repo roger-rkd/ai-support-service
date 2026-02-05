@@ -636,27 +636,385 @@
             margin-bottom: 0.5rem;
         }
 
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 1.5rem;
-            }
-
-            .services-grid,
-            .quick-actions {
-                grid-template-columns: 1fr;
+        /* Tablet Styles */
+        @media (max-width: 992px) {
+            .container {
+                padding: 1.5rem;
             }
 
             .chat-container {
-                height: 500px;
+                height: 600px;
                 padding: 1.5rem;
+            }
+
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            /* Header adjustments */
+            .nhs-header {
+                padding: 0.75rem 1rem;
+            }
+
+            .nhs-header-content {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .nhs-logo {
+                font-size: 1.1rem;
+            }
+
+            .nhs-logo-icon {
+                width: 32px;
+                height: 32px;
+            }
+
+            .nhs-logo-icon svg {
+                width: 28px;
+                height: 28px;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+            }
+
+            /* Emergency banner */
+            .emergency-banner {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+                flex-direction: column;
+                gap: 0.25rem;
+            }
+
+            /* Container and hero */
+            .container {
+                padding: 1rem;
+                gap: 1.5rem;
+            }
+
+            .hero {
+                padding: 1.25rem;
+                border-left-width: 4px;
+            }
+
+            .hero h1 {
+                font-size: 1.35rem;
+                line-height: 1.3;
+            }
+
+            .hero-subtitle {
+                font-size: 0.9rem;
+            }
+
+            .disclaimer-box {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+
+            .disclaimer-box h3 {
+                font-size: 0.9rem;
+            }
+
+            .disclaimer-box p {
+                font-size: 0.85rem;
+            }
+
+            /* Service cards */
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .service-card {
+                padding: 1.25rem;
+            }
+
+            .service-icon {
+                width: 55px;
+                height: 55px;
+            }
+
+            .service-icon svg {
+                width: 26px;
+                height: 26px;
+            }
+
+            .service-card h3 {
+                font-size: 1rem;
+            }
+
+            .service-card p {
+                font-size: 0.85rem;
+            }
+
+            /* Chat container */
+            .chat-container {
+                height: auto;
+                min-height: 500px;
+                max-height: 70vh;
+                padding: 1rem;
+                border-left-width: 4px;
+            }
+
+            .chat-header {
+                padding-bottom: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .chat-header h2 {
+                font-size: 1.1rem;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+                gap: 0.5rem;
+                margin-bottom: 1rem;
+            }
+
+            .action-btn {
+                padding: 0.65rem 0.85rem;
+                font-size: 0.8rem;
+            }
+
+            .action-btn svg {
+                width: 16px;
+                height: 16px;
+            }
+
+            /* Messages */
+            .messages {
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+                min-height: 250px;
+            }
+
+            .message {
+                gap: 0.5rem;
+            }
+
+            .message-avatar {
+                width: 32px;
+                height: 32px;
+            }
+
+            .message-avatar svg {
+                width: 18px;
+                height: 18px;
             }
 
             .message-content {
                 max-width: 85%;
+                padding: 0.85rem 1rem;
+                font-size: 0.9rem;
+                line-height: 1.6;
             }
 
+            .message-content ul,
+            .message-content ol {
+                padding-left: 1.25rem;
+            }
+
+            .ai-disclaimer {
+                padding: 0.6rem;
+                font-size: 0.8rem;
+            }
+
+            /* Input */
+            .input-container {
+                flex-direction: column;
+                gap: 0.75rem;
+            }
+
+            .input-container input {
+                padding: 0.85rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .send-btn {
+                padding: 0.85rem 1.5rem;
+                font-size: 0.9rem;
+                width: 100%;
+            }
+
+            /* Info section */
+            .info-section {
+                padding: 1.5rem 1rem;
+            }
+
+            .info-section h2 {
+                font-size: 1.25rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+                gap: 1.25rem;
+            }
+
+            .info-card {
+                padding: 1.25rem;
+            }
+
+            .info-icon {
+                width: 50px;
+                height: 50px;
+            }
+
+            .info-icon svg {
+                width: 24px;
+                height: 24px;
+            }
+
+            .info-card h3 {
+                font-size: 1rem;
+            }
+
+            .info-card p {
+                font-size: 0.85rem;
+            }
+
+            /* Footer */
+            .nhs-footer {
+                padding: 1.5rem 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                text-align: center;
+            }
+
+            .footer-section h4 {
+                font-size: 0.95rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .footer-section li {
+                font-size: 0.85rem;
+            }
+
+            .footer-bottom {
+                padding-top: 1rem;
+                margin-top: 1.5rem;
+            }
+
+            .footer-bottom p {
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
             .nhs-logo {
+                font-size: 1rem;
+            }
+
+            .nhs-logo span:last-child {
+                max-width: 180px;
+                line-height: 1.2;
+            }
+
+            .nav-links {
+                gap: 0.75rem;
+            }
+
+            .nav-links a {
+                font-size: 0.8rem;
+            }
+
+            .hero h1 {
                 font-size: 1.2rem;
+            }
+
+            .chat-container {
+                min-height: 450px;
+                max-height: 65vh;
+            }
+
+            .message-content {
+                max-width: 90%;
+                padding: 0.75rem;
+                font-size: 0.85rem;
+            }
+
+            .quick-actions {
+                display: none;
+            }
+
+            .action-btn {
+                font-size: 0.75rem;
+                padding: 0.5rem 0.75rem;
+            }
+        }
+
+        /* Landscape orientation on mobile */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .chat-container {
+                min-height: 300px;
+                max-height: 80vh;
+            }
+
+            .messages {
+                min-height: 150px;
+            }
+
+            .hero {
+                padding: 1rem;
+            }
+
+            .services-grid {
+                display: none;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (hover: none) and (pointer: coarse) {
+            .service-card:hover,
+            .action-btn:hover,
+            .send-btn:hover:not(:disabled) {
+                transform: none;
+            }
+
+            .service-card:active {
+                transform: scale(0.98);
+            }
+
+            .action-btn:active,
+            .send-btn:active:not(:disabled) {
+                opacity: 0.8;
+            }
+        }
+
+        /* Safe area for notched phones */
+        @supports (padding: max(0px)) {
+            .nhs-header {
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
+            }
+
+            .container {
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
+            }
+
+            .nhs-footer {
+                padding-left: max(1rem, env(safe-area-inset-left));
+                padding-right: max(1rem, env(safe-area-inset-right));
+                padding-bottom: max(1.5rem, env(safe-area-inset-bottom));
             }
         }
     </style>
