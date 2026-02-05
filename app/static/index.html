@@ -14,6 +14,8 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f0f4f5;
+            background-image:
+                repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0, 94, 184, 0.02) 35px, rgba(0, 94, 184, 0.02) 70px);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -145,12 +147,28 @@
             padding: 1.5rem;
             border-radius: 4px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(65, 182, 230, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(30%, -30%);
         }
 
         .service-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0, 94, 184, 0.2);
+            border-top-color: #005eb8;
         }
 
         .service-icon {
@@ -172,12 +190,23 @@
 
         .chat-container {
             background: white;
-            border-radius: 4px;
-            padding: 2rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 94, 184, 0.15);
+            border-left: 5px solid #005eb8;
             display: flex;
             flex-direction: column;
-            height: 600px;
+            height: 700px;
+            position: relative;
+        }
+
+        .chat-container::before {
+            content: '🏥';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 4rem;
+            opacity: 0.05;
         }
 
         .chat-header {
@@ -319,6 +348,20 @@
         .message-content li {
             margin: 0.4rem 0;
             line-height: 1.5;
+        }
+
+        .message-content strong,
+        .message-content b {
+            color: #005eb8;
+            font-weight: 700;
+        }
+
+        .message-content .keyword {
+            background: rgba(0, 94, 184, 0.1);
+            padding: 0.1rem 0.3rem;
+            border-radius: 3px;
+            font-weight: 600;
+            color: #003087;
         }
 
         .ai-disclaimer {
@@ -539,22 +582,22 @@
             </div>
 
             <div class="services-grid" id="services">
-                <div class="service-card">
+                <div class="service-card" onclick="scrollToChat('I have symptoms I\'d like to check')">
                     <div class="service-icon">🩺</div>
                     <h3>Symptom Checker</h3>
                     <p>Describe your symptoms and get information about possible causes and home remedies for minor conditions.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" onclick="scrollToChat('How can I book a GP appointment?')">
                     <div class="service-icon">📅</div>
                     <h3>Appointments</h3>
                     <p>Get guidance on booking GP appointments, specialist consultations, and NHS services.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" onclick="scrollToChat('Find my nearest GP practice')">
                     <div class="service-icon">📍</div>
                     <h3>Find Services</h3>
                     <p>Locate your nearest GP practice, pharmacy, hospital, or walk-in centre with contact information.</p>
                 </div>
-                <div class="service-card">
+                <div class="service-card" onclick="scrollToChat('What are home remedies I can use?')">
                     <div class="service-icon">💊</div>
                     <h3>Home Remedies</h3>
                     <p>Learn about self-care treatments for common conditions like colds, headaches, and minor injuries.</p>
@@ -745,11 +788,16 @@
         }
 
         function formatMessage(text) {
-            // Escape HTML to prevent XSS
+            // Escape HTML to prevent XSS but preserve bold markers
             const escapeHtml = (str) => {
                 const div = document.createElement('div');
                 div.textContent = str;
                 return div.innerHTML;
+            };
+
+            // Process bold text **text** -> <strong>text</strong>
+            const processBold = (str) => {
+                return str.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
             };
 
             // Split into lines
@@ -789,13 +837,14 @@
                         inList = true;
                         listType = 'numbered';
                     }
-                    listItems.push('<li>' + escapeHtml(numberedMatch[2]) + '</li>');
+                    const itemText = processBold(escapeHtml(numberedMatch[2]));
+                    listItems.push('<li>' + itemText + '</li>');
                     continue;
                 }
 
-                // Check for bullet list (-, *, •)
-                const bulletMatch = line.match(/^[-*•]\s+(.+)$/);
-                if (bulletMatch) {
+                // Check for bullet list (-, *, •) but not bold markers
+                const bulletMatch = line.match(/^[-•]\s+(.+)$/);
+                if (bulletMatch && !line.startsWith('**')) {
                     if (!inList || listType !== 'bullet') {
                         if (inList) {
                             formatted.push('<ol>' + listItems.join('') + '</ol>');
@@ -804,7 +853,8 @@
                         inList = true;
                         listType = 'bullet';
                     }
-                    listItems.push('<li>' + escapeHtml(bulletMatch[1]) + '</li>');
+                    const itemText = processBold(escapeHtml(bulletMatch[1]));
+                    listItems.push('<li>' + itemText + '</li>');
                     continue;
                 }
 
@@ -820,7 +870,8 @@
                     listType = null;
                 }
 
-                formatted.push('<p>' + escapeHtml(line) + '</p>');
+                const processedLine = processBold(escapeHtml(line));
+                formatted.push('<p>' + processedLine + '</p>');
             }
 
             // Close any remaining list
@@ -918,6 +969,19 @@
             if (loadingMsg) {
                 loadingMsg.remove();
             }
+        }
+
+        // Scroll to chat and optionally set question
+        function scrollToChat(prefilledQuestion = '') {
+            const chatSection = document.getElementById('chat');
+            chatSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            setTimeout(() => {
+                if (prefilledQuestion) {
+                    questionInput.value = prefilledQuestion;
+                }
+                questionInput.focus();
+            }, 500);
         }
 
         // Focus input on load
