@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NHS AI Health Assistant - Virtual Healthcare Support</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,7 +15,7 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: #f0f4f5;
             background-image:
                 repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0, 94, 184, 0.02) 35px, rgba(0, 94, 184, 0.02) 70px);
@@ -20,6 +23,12 @@
             display: flex;
             flex-direction: column;
             color: #212b32;
+            font-weight: 400;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
         }
 
         /* NHS Header */
@@ -43,13 +52,23 @@
         .nhs-logo {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            font-size: 1.5rem;
-            font-weight: 700;
+            gap: 0.75rem;
+            font-size: 1.4rem;
+            font-weight: 600;
         }
 
         .nhs-logo-icon {
-            font-size: 2.5rem;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nhs-logo-icon svg {
+            width: 36px;
+            height: 36px;
+            fill: white;
         }
 
         .emergency-banner {
@@ -57,13 +76,24 @@
             color: white;
             padding: 0.75rem 2rem;
             text-align: center;
-            font-weight: 600;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .emergency-banner svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
         }
 
         .emergency-banner a {
             color: white;
             text-decoration: underline;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .nav-links {
@@ -105,13 +135,15 @@
             font-size: 2rem;
             color: #005eb8;
             margin-bottom: 1rem;
+            font-weight: 600;
         }
 
         .hero-subtitle {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #4c6272;
             margin-bottom: 1.5rem;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-weight: 400;
         }
 
         .disclaimer-box {
@@ -125,13 +157,24 @@
         .disclaimer-box h3 {
             color: #d47500;
             margin-bottom: 0.5rem;
-            font-size: 1.1rem;
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .disclaimer-box h3 svg {
+            width: 20px;
+            height: 20px;
+            fill: #d47500;
         }
 
         .disclaimer-box p {
             color: #4c6272;
-            line-height: 1.5;
-            font-size: 0.95rem;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            font-weight: 400;
         }
 
         .services-grid {
@@ -172,8 +215,8 @@
         }
 
         .service-icon {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             margin-bottom: 1rem;
             border-radius: 50%;
             display: flex;
@@ -184,21 +227,23 @@
         }
 
         .service-icon svg {
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
             fill: #005eb8;
         }
 
         .service-card h3 {
             color: #005eb8;
             margin-bottom: 0.75rem;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
         .service-card p {
             color: #4c6272;
-            line-height: 1.5;
-            font-size: 0.95rem;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            font-weight: 400;
         }
 
         .chat-container {
@@ -213,15 +258,6 @@
             position: relative;
         }
 
-        .chat-container::before {
-            content: '🏥';
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 4rem;
-            opacity: 0.05;
-        }
-
         .chat-header {
             display: flex;
             align-items: center;
@@ -232,8 +268,9 @@
         }
 
         .chat-header h2 {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: #005eb8;
+            font-weight: 600;
         }
 
         .status-indicator {
@@ -262,16 +299,31 @@
             color: #005eb8;
             padding: 0.75rem 1rem;
             border-radius: 4px;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.2s;
-            font-weight: 600;
+            font-weight: 500;
+            font-family: 'Poppins', sans-serif;
             text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn svg {
+            width: 18px;
+            height: 18px;
+            fill: #005eb8;
+            flex-shrink: 0;
         }
 
         .action-btn:hover {
             background: #005eb8;
             color: white;
+        }
+
+        .action-btn:hover svg {
+            fill: white;
         }
 
         .messages {
@@ -314,8 +366,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.25rem;
             flex-shrink: 0;
+        }
+
+        .message-avatar svg {
+            width: 22px;
+            height: 22px;
+            fill: white;
         }
 
         .message.user .message-avatar {
@@ -332,7 +389,8 @@
             border-radius: 8px;
             max-width: 75%;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 0.95rem;
         }
 
         .message.user .message-content {
@@ -359,20 +417,20 @@
         }
 
         .message-content li {
-            margin: 0.4rem 0;
-            line-height: 1.5;
+            margin: 0.5rem 0;
+            line-height: 1.6;
         }
 
         .message-content strong,
         .message-content b {
             color: #212b32;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .message-content a {
             color: #005eb8;
             text-decoration: underline;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .message-content a:hover {
@@ -383,9 +441,14 @@
             background: #fff4e5;
             border-left: 3px solid #f9bf00;
             padding: 0.75rem;
-            margin-top: 0.5rem;
+            margin-top: 0.75rem;
             font-size: 0.85rem;
             color: #4c6272;
+            line-height: 1.5;
+        }
+
+        .ai-disclaimer ul {
+            margin: 0.5rem 0 0 0;
         }
 
         .loading {
@@ -420,7 +483,8 @@
             padding: 1rem 1.5rem;
             border: 2px solid #e8edee;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            font-family: 'Poppins', sans-serif;
             outline: none;
             transition: border-color 0.3s;
         }
@@ -435,8 +499,9 @@
             border: none;
             padding: 1rem 2rem;
             border-radius: 4px;
-            font-size: 1rem;
+            font-size: 0.95rem;
             font-weight: 600;
+            font-family: 'Poppins', sans-serif;
             cursor: pointer;
             transition: background 0.2s;
         }
@@ -460,8 +525,9 @@
         .info-section h2 {
             color: #005eb8;
             margin-bottom: 2rem;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
             text-align: center;
+            font-weight: 600;
         }
 
         .info-grid {
@@ -478,25 +544,40 @@
         }
 
         .info-icon {
-            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
             margin-bottom: 1rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e8f4fc 0%, #d0e8f5 100%);
+        }
+
+        .info-icon svg {
+            width: 28px;
+            height: 28px;
+            fill: #005eb8;
         }
 
         .info-card h3 {
             color: #005eb8;
             margin-bottom: 0.75rem;
-            font-size: 1.25rem;
+            font-size: 1.1rem;
+            font-weight: 600;
         }
 
         .info-card p {
             color: #4c6272;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 0.9rem;
+            font-weight: 400;
         }
 
         .info-card a {
             color: #005eb8;
             text-decoration: underline;
-            font-weight: 600;
+            font-weight: 500;
         }
 
         .nhs-footer {
@@ -517,6 +598,8 @@
         .footer-section h4 {
             color: white;
             margin-bottom: 1rem;
+            font-weight: 600;
+            font-size: 1rem;
         }
 
         .footer-section ul {
@@ -525,12 +608,14 @@
 
         .footer-section li {
             margin-bottom: 0.5rem;
+            font-size: 0.9rem;
         }
 
         .footer-section a {
             color: #aeb7bd;
             text-decoration: none;
             transition: color 0.2s;
+            font-weight: 400;
         }
 
         .footer-section a:hover {
@@ -544,6 +629,11 @@
             border-top: 1px solid #3a4651;
             text-align: center;
             color: #aeb7bd;
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom p {
+            margin-bottom: 0.5rem;
         }
 
         @media (max-width: 768px) {
@@ -558,23 +648,31 @@
 
             .chat-container {
                 height: 500px;
+                padding: 1.5rem;
             }
 
             .message-content {
                 max-width: 85%;
+            }
+
+            .nhs-logo {
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="emergency-banner">
-        ⚠️ <strong>Emergency?</strong> Call 999 immediately | <strong>Urgent medical help:</strong> Call NHS 24 on <a href="tel:111">111</a>
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/></svg>
+        <strong>Emergency?</strong> Call 999 immediately | <strong>Urgent medical help:</strong> Call NHS 24 on <a href="tel:111">111</a>
     </div>
 
     <header class="nhs-header">
         <div class="nhs-header-content">
             <div class="nhs-logo">
-                <span class="nhs-logo-icon">🏥</span>
+                <span class="nhs-logo-icon">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>
+                </span>
                 <span>NHS AI Health Assistant</span>
             </div>
             <nav class="nav-links">
@@ -591,7 +689,10 @@
             <p class="hero-subtitle">Get instant support for common health questions, find your nearest GP, book appointments, and receive guidance on managing minor ailments at home.</p>
 
             <div class="disclaimer-box">
-                <h3>⚕️ Important Medical Disclaimer</h3>
+                <h3>
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>
+                    Important Medical Disclaimer
+                </h3>
                 <p><strong>This is an AI assistant providing general health information only.</strong> It is not a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of your GP or other qualified health provider with any questions about your medical condition. In case of emergency, call 999 or visit your nearest A&E.</p>
             </div>
 
@@ -642,15 +743,29 @@
             </div>
 
             <div class="quick-actions">
-                <button class="action-btn" onclick="askQuestion('I have a headache and fever. What should I do?')">🤒 I have a fever</button>
-                <button class="action-btn" onclick="askQuestion('How can I book a GP appointment?')">📅 Book appointment</button>
-                <button class="action-btn" onclick="askQuestion('What are home remedies for a cold?')">🤧 Cold remedies</button>
-                <button class="action-btn" onclick="askQuestion('Find my nearest GP practice')">📍 Find nearest GP</button>
+                <button class="action-btn" onclick="askQuestion('I have a headache and fever. What should I do?')">
+                    <svg viewBox="0 0 24 24"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
+                    I have a fever
+                </button>
+                <button class="action-btn" onclick="askQuestion('How can I book a GP appointment?')">
+                    <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg>
+                    Book appointment
+                </button>
+                <button class="action-btn" onclick="askQuestion('What are home remedies for a cold?')">
+                    <svg viewBox="0 0 24 24"><path d="M6 3h12v2H6zm11 3H7c-1.1 0-2 .9-2 2v11c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-1 9h-2.5v2.5h-3V15H8v-3h2.5V9.5h3V12H16v3z"/></svg>
+                    Cold remedies
+                </button>
+                <button class="action-btn" onclick="askQuestion('Find my nearest GP practice')">
+                    <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+                    Find nearest GP
+                </button>
             </div>
 
             <div class="messages" id="messages">
                 <div class="message assistant">
-                    <div class="message-avatar">🏥</div>
+                    <div class="message-avatar">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>
+                    </div>
                     <div class="message-content">
                         <p>Hello! I'm your NHS AI Health Assistant. I'm here to help you with:</p>
                         <ul>
@@ -681,22 +796,30 @@
             <h2>How Can We Help You?</h2>
             <div class="info-grid">
                 <div class="info-card">
-                    <div class="info-icon">🤖</div>
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                    </div>
                     <h3>AI-Powered Support</h3>
                     <p>Our AI assistant uses advanced natural language processing to understand your health concerns and provide evidence-based information from NHS resources.</p>
                 </div>
                 <div class="info-card">
-                    <div class="info-icon">🔒</div>
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                    </div>
                     <h3>Safe & Confidential</h3>
                     <p>Your conversations are private and secure. We follow NHS data protection standards to keep your health information safe.</p>
                 </div>
                 <div class="info-card">
-                    <div class="info-icon">📚</div>
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                    </div>
                     <h3>NHS-Verified Information</h3>
                     <p>All medical information comes from trusted NHS sources and clinical guidelines to ensure accuracy and reliability.</p>
                 </div>
                 <div class="info-card">
-                    <div class="info-icon">⚕️</div>
+                    <div class="info-icon">
+                        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>
+                    </div>
                     <h3>When to See a Doctor</h3>
                     <p>The AI will guide you on when to seek professional medical help. Call <a href="tel:111">NHS 24 (111)</a> for urgent advice or <a href="tel:999">999</a> for emergencies.</p>
                 </div>
@@ -743,9 +866,9 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>Made with ❤️ by <strong>Rohit Kumar Dubey</strong></p>
+            <p>Made with care by <strong>Rohit Kumar Dubey</strong></p>
             <p>Powered by Groq AI, Sentence Transformers, and FAISS | <a href="https://huggingface.co/spaces/dubey-codes/ai-support-service" target="_blank">Hugging Face Demo</a></p>
-            <p style="margin-top: 1rem; font-size: 0.85rem;">⚠️ This AI assistant provides general health information only and is not a substitute for professional medical advice.</p>
+            <p style="margin-top: 0.75rem; font-size: 0.85rem;">This AI assistant provides general health information only and is not a substitute for professional medical advice.</p>
         </div>
     </footer>
 
@@ -754,6 +877,11 @@
         const questionInput = document.getElementById('questionInput');
         const sendBtn = document.getElementById('sendBtn');
         let messageCount = 0;
+
+        // SVG icons for avatars
+        const userAvatarSVG = '<svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>';
+        const assistantAvatarSVG = '<svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>';
+        const disclaimerAvatarSVG = '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>';
 
         async function sendMessage() {
             const question = questionInput.value.trim();
@@ -764,14 +892,11 @@
         }
 
         async function askQuestion(question) {
-            // Add user message
             addMessage(question, 'user');
 
-            // Disable input
             questionInput.disabled = true;
             sendBtn.disabled = true;
 
-            // Add loading indicator
             const loadingId = addLoadingMessage();
 
             try {
@@ -789,15 +914,11 @@
 
                 const data = await response.json();
 
-                // Remove loading indicator
                 removeLoadingMessage(loadingId);
-
-                // Add assistant response with disclaimer
                 addMessage(data.answer, 'assistant', true);
 
                 messageCount++;
 
-                // Show disclaimer reminder every 3 messages
                 if (messageCount % 3 === 0) {
                     setTimeout(() => {
                         addDisclaimerReminder();
@@ -809,7 +930,6 @@
                 removeLoadingMessage(loadingId);
                 addMessage('I apologize, but I\'m having trouble processing your request right now. If you have an urgent medical concern, please call NHS 24 on 111 or 999 in an emergency.', 'assistant', true);
             } finally {
-                // Re-enable input
                 questionInput.disabled = false;
                 sendBtn.disabled = false;
                 questionInput.focus();
@@ -817,21 +937,17 @@
         }
 
         function formatMessage(text) {
-            // Escape HTML to prevent XSS but preserve bold markers
             const escapeHtml = (str) => {
                 const div = document.createElement('div');
                 div.textContent = str;
                 return div.innerHTML;
             };
 
-            // Process bold text **text** -> <strong>text</strong>
             const processBold = (str) => {
                 return str.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
             };
 
-            // Convert URLs to clickable links
             const processLinks = (str) => {
-                // Match URLs starting with http:// or https:// or www.
                 const urlPattern = /(https?:\/\/[^\s<]+|www\.[^\s<]+)/g;
                 return str.replace(urlPattern, (url) => {
                     const href = url.startsWith('www.') ? 'https://' + url : url;
@@ -839,7 +955,6 @@
                 });
             };
 
-            // Split into lines
             let lines = text.split('\n');
             let formatted = [];
             let inList = false;
@@ -850,7 +965,6 @@
                 let line = lines[i].trim();
 
                 if (!line) {
-                    // Empty line - close any open list and add spacing
                     if (inList) {
                         if (listType === 'numbered') {
                             formatted.push('<ol>' + listItems.join('') + '</ol>');
@@ -861,11 +975,9 @@
                         listItems = [];
                         listType = null;
                     }
-                    formatted.push('<br>');
                     continue;
                 }
 
-                // Check for numbered list (1. 2. 3. etc)
                 const numberedMatch = line.match(/^(\d+)\.\s+(.+)$/);
                 if (numberedMatch) {
                     if (!inList || listType !== 'numbered') {
@@ -881,7 +993,6 @@
                     continue;
                 }
 
-                // Check for bullet list (-, *, •) but not bold markers
                 const bulletMatch = line.match(/^[-•]\s+(.+)$/);
                 if (bulletMatch && !line.startsWith('**')) {
                     if (!inList || listType !== 'bullet') {
@@ -897,7 +1008,6 @@
                     continue;
                 }
 
-                // Regular line
                 if (inList) {
                     if (listType === 'numbered') {
                         formatted.push('<ol>' + listItems.join('') + '</ol>');
@@ -913,7 +1023,6 @@
                 formatted.push('<p>' + processedLine + '</p>');
             }
 
-            // Close any remaining list
             if (inList) {
                 if (listType === 'numbered') {
                     formatted.push('<ol>' + listItems.join('') + '</ol>');
@@ -931,16 +1040,14 @@
 
             const avatar = document.createElement('div');
             avatar.className = 'message-avatar';
-            avatar.textContent = type === 'user' ? '👤' : '🏥';
+            avatar.innerHTML = type === 'user' ? userAvatarSVG : assistantAvatarSVG;
 
             const content = document.createElement('div');
             content.className = 'message-content';
 
-            // Format the message for better readability
             if (type === 'assistant') {
                 content.innerHTML = formatMessage(text);
 
-                // Add disclaimer for AI responses
                 if (withDisclaimer) {
                     const disclaimer = document.createElement('div');
                     disclaimer.className = 'ai-disclaimer';
@@ -964,7 +1071,7 @@
 
             const avatar = document.createElement('div');
             avatar.className = 'message-avatar';
-            avatar.textContent = '⚕️';
+            avatar.innerHTML = disclaimerAvatarSVG;
 
             const content = document.createElement('div');
             content.className = 'message-content';
@@ -984,7 +1091,7 @@
 
             const avatar = document.createElement('div');
             avatar.className = 'message-avatar';
-            avatar.textContent = '🏥';
+            avatar.innerHTML = assistantAvatarSVG;
 
             const content = document.createElement('div');
             content.className = 'message-content';
@@ -1010,7 +1117,6 @@
             }
         }
 
-        // Scroll to chat and optionally set question
         function scrollToChat(prefilledQuestion = '') {
             const chatSection = document.getElementById('chat');
             chatSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1023,7 +1129,6 @@
             }, 500);
         }
 
-        // Focus input on load
         window.addEventListener('load', () => {
             questionInput.focus();
         });
