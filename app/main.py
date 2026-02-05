@@ -5,11 +5,13 @@ Main application entry point
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import Response
+from fastapi.responses import Response, FileResponse
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 from typing import Optional
 import logging
 import time
+import os
 from app.rag.pipeline import ask
 from app.observability import metrics
 
@@ -37,6 +39,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Mount static files directory
+static_dir = os.path.join(os.path.dirname(__file__), "static")
+if os.path.exists(static_dir):
+    app.mount("/static", StaticFiles(directory=static_dir), name="static")
 
 
 # Pydantic models
@@ -166,19 +173,45 @@ async def get_metrics():
     return Response(content=metrics_data, media_type=content_type)
 
 
-@app.get("/", tags=["Root"])
+@app.get("/", tags=["Root"], include_in_schema=False)
 async def root():
     """
-    Root endpoint - redirects to API documentation
+    Root endpoint - serves the interactive web interface
 
     Returns:
-        dict: Welcome message with links
+        FileResponse: The main HTML page
+    """
+    index_path = os.path.join(os.path.dirname(__file__), "static", "index.html")
+    if os.path.exists(index_path):
+        return FileResponse(index_path)
+    else:
+        # Fallback to JSON if HTML file doesn't exist
+        return {
+            "message": "Welcome to AI Support Service API",
+            "documentation": "/docs",
+            "health": "/health",
+            "metrics": "/metrics"
+        }
+
+
+@app.get("/api", tags=["Root"])
+async def api_info():
+    """
+    API information endpoint
+
+    Returns:
+        dict: API information and available endpoints
     """
     return {
         "message": "Welcome to AI Support Service API",
-        "documentation": "/docs",
-        "health": "/health",
-        "metrics": "/metrics"
+        "version": "1.0.0",
+        "endpoints": {
+            "interactive_ui": "/",
+            "documentation": "/docs",
+            "health": "/health",
+            "ask": "/ask",
+            "metrics": "/metrics"
+        }
     }
 
 
