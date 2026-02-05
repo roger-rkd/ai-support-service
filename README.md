@@ -1,6 +1,27 @@
+---
+title: AI Support Service
+emoji: 🤖
+colorFrom: blue
+colorTo: purple
+sdk: docker
+app_port: 8000
+pinned: false
+license: mit
+tags:
+  - rag
+  - fastapi
+  - groq
+  - faiss
+  - llm
+  - support
+  - chatbot
+---
+
 # AI Support Service with RAG Pipeline
 
 A production-ready FastAPI backend powered by Retrieval Augmented Generation (RAG) for intelligent support queries.
+
+**🚀 Live Demo**: [https://huggingface.co/spaces/dubey-codes/ai-support-service](https://huggingface.co/spaces/dubey-codes/ai-support-service)
 
 ## Features
 
