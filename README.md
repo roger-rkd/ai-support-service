@@ -17,41 +17,72 @@ tags:
   - chatbot
 ---
 
-# AI Support Service with RAG Pipeline
+# 🤖 AI Support Service with RAG Pipeline
 
-A production-ready FastAPI backend powered by Retrieval Augmented Generation (RAG) for intelligent support queries.
+> **An intelligent AI chatbot that answers customer support questions by learning from your company's FAQ documents**
+
+Transform your customer support with an AI assistant that reads your documentation (PDF & TXT files) and provides instant, accurate answers 24/7.
 
 **🚀 Live Demo**: [https://huggingface.co/spaces/dubey-codes/ai-support-service](https://huggingface.co/spaces/dubey-codes/ai-support-service)
 
-## Features
+**👨‍💻 Author**: Made with ❤️ by **Rohit Kumar Dubey**
+**📦 Repository**: [GitHub](https://github.com/roger-rkd/ai-support-service)
 
-- **RAG Pipeline**: Retrieves relevant documents and generates contextual answers
-- **Vector Search**: FAISS-powered semantic search for document retrieval
-- **LLM Integration**: Groq API for fast, accurate answer generation
-- **Embeddings**: Sentence Transformers for high-quality text embeddings
-- **Production-Ready**: Logging, error handling, CORS, and auto-documentation
+---
 
-## Project Structure
+## ✨ Features
+
+### Core Capabilities
+- **📄 PDF & TXT Support**: Upload your FAQ documents in PDF or text format
+- **🤖 Smart AI Responses**: Powered by Groq's Llama 3.3 70B model for fast, accurate answers
+- **🔍 Semantic Search**: FAISS vector search understands meaning, not just keywords
+- **💬 Interactive Chat UI**: Beautiful, user-friendly web interface
+- **📊 Real-time Metrics**: Monitor performance with Prometheus metrics
+- **🚀 Production-Ready**: Docker support, Kubernetes manifests, health checks
+
+### Technical Features
+- **RAG Pipeline**: Retrieval Augmented Generation for contextual responses
+- **Vector Embeddings**: Sentence Transformers for high-quality text understanding
+- **RESTful API**: FastAPI with automatic OpenAPI documentation
+- **Observability**: Prometheus metrics, request tracking, latency monitoring
+- **CORS Enabled**: Ready for frontend integration
+
+## 📁 Project Structure
 
 ```
 ai-support-service/
 ├── app/
 │   ├── __init__.py
 │   ├── main.py              # FastAPI application
-│   └── rag/
+│   ├── static/              # Frontend files
+│   │   └── index.html       # Interactive chat UI
+│   ├── rag/                 # RAG pipeline components
+│   │   ├── __init__.py
+│   │   ├── embedder.py      # Document & query embedding
+│   │   ├── retriever.py     # FAISS vector search (PDF + TXT)
+│   │   └── pipeline.py      # RAG orchestration
+│   └── observability/       # Prometheus metrics
 │       ├── __init__.py
-│       ├── embedder.py      # Document & query embedding
-│       ├── retriever.py     # FAISS vector search
-│       └── pipeline.py      # RAG orchestration
-├── data/                    # Knowledge base documents (.txt files)
+│       └── metrics.py
+├── data/                    # 📄 Add your FAQ files here (.txt or .pdf)
 │   ├── faq_password.txt
 │   ├── faq_account.txt
 │   ├── faq_billing.txt
-│   └── faq_technical.txt
-├── venv/                    # Virtual environment
+│   ├── faq_technical.txt
+│   └── company_policies.pdf # 👈 PDF files supported!
+├── k8s/                     # Kubernetes deployment manifests
+│   ├── deployment.yaml
+│   ├── service.yaml
+│   ├── hpa.yaml
+│   └── secret.yaml.template
+├── observability/           # Monitoring stack
+│   ├── docker-compose.yml   # Prometheus + Grafana
+│   └── grafana-dashboard.json
 ├── requirements.txt
-├── .env                     # Environment variables (create from .env.example)
-└── .env.example
+├── Dockerfile
+├── docker-compose.yml
+├── .env.example
+└── README.md
 ```
 
 ## Setup Instructions
@@ -95,10 +126,64 @@ GROQ_API_KEY=your_actual_groq_api_key_here
 uvicorn app.main:app --reload
 ```
 
-The API will be available at:
-- **API**: http://localhost:8000
-- **Interactive Docs**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
+The service will be available at:
+- **💬 Interactive Chat**: http://localhost:8000
+- **📖 API Docs**: http://localhost:8000/docs
+- **📊 Metrics**: http://localhost:8000/metrics
+- **🏥 Health Check**: http://localhost:8000/health
+
+---
+
+## 📄 Adding Your FAQ Documents
+
+### Supported Formats
+- **Text Files** (`.txt`): Plain text FAQs
+- **PDF Files** (`.pdf`): **NEW!** Upload your PDF documentation
+
+### How to Add Documents
+
+1. **Place files in the `/data` folder**:
+   ```bash
+   data/
+   ├── faq_password.txt
+   ├── faq_billing.txt
+   ├── company_policies.pdf    # 👈 PDF support!
+   └── user_guide.pdf           # 👈 PDF support!
+   ```
+
+2. **Rebuild the index** (automatic on restart):
+   ```bash
+   # Restart the application
+   uvicorn app.main:app --reload
+   ```
+
+3. **Or rebuild manually via Python**:
+   ```python
+   from app.rag.pipeline import rebuild_index
+   rebuild_index()
+   ```
+
+### Document Tips
+- ✅ **Use clear, well-formatted documents**
+- ✅ **One topic per file recommended** (e.g., `billing.pdf`, `passwords.txt`)
+- ✅ **PDFs with searchable text work best** (not scanned images)
+- ✅ **Keep documents focused and concise**
+
+---
+
+## 💬 Using the Chat Interface
+
+1. Open http://localhost:8000 in your browser
+2. Try the example questions or type your own
+3. Get instant AI-powered answers based on your FAQ documents
+
+**Example Questions:**
+- "How do I reset my password?"
+- "What are your billing policies?"
+- "How can I update my account information?"
+- "What are your support hours?"
+
+---
 
 ## API Endpoints
 
@@ -125,20 +210,43 @@ Response:
 }
 ```
 
-## How It Works
+## 🔧 How It Works
 
-1. **Document Loading**: All `.txt` files in `data/` are loaded
-2. **Embedding**: Documents → vector embeddings (`all-MiniLM-L6-v2`)
-3. **Indexing**: Embeddings stored in FAISS index
-4. **Query**: Question → embedding → retrieve top-3 docs → Groq LLM → answer
+```
+┌─────────────────────────────────────────────────────────────┐
+│ 1. Load Documents (PDF/TXT) → Parse & Extract Text         │
+├─────────────────────────────────────────────────────────────┤
+│ 2. Generate Embeddings → Convert text to vectors           │
+├─────────────────────────────────────────────────────────────┤
+│ 3. Store in FAISS Index → Fast similarity search           │
+├─────────────────────────────────────────────────────────────┤
+│ 4. User Asks Question → Convert to vector                  │
+├─────────────────────────────────────────────────────────────┤
+│ 5. Search Similar Docs → Retrieve top-3 matches            │
+├─────────────────────────────────────────────────────────────┤
+│ 6. Generate Answer → Groq AI with context                  │
+└─────────────────────────────────────────────────────────────┘
+```
 
-## Technologies
+### Step-by-Step Process
 
-- **FastAPI** - Modern web framework
-- **Sentence Transformers** - Text embeddings
-- **FAISS** - Vector similarity search
-- **Groq** - Fast LLM inference
-- **Pydantic** - Data validation
+1. **📄 Document Loading**: All `.txt` and `.pdf` files in `data/` are loaded and parsed
+2. **🧮 Embedding**: Documents converted to vector embeddings using `all-MiniLM-L6-v2`
+3. **💾 Indexing**: Embeddings stored in FAISS index for fast retrieval
+4. **❓ Query**: User question → embedding → retrieve top-3 relevant docs
+5. **🤖 Generation**: Groq's Llama 3.3 70B generates answer using retrieved context
+
+## 🛠️ Technologies
+
+| Component | Technology | Purpose |
+|-----------|-----------|---------|
+| **Web Framework** | FastAPI | High-performance REST API |
+| **AI Model** | Groq (Llama 3.3 70B) | Fast LLM inference |
+| **Embeddings** | Sentence Transformers | Text-to-vector conversion |
+| **Vector DB** | FAISS | Similarity search |
+| **PDF Parser** | PyPDF | Extract text from PDFs |
+| **Metrics** | Prometheus | Observability |
+| **Validation** | Pydantic | Request/response models |
 
 ## Docker Deployment
 

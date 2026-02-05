@@ -350,6 +350,75 @@
             cursor: not-allowed;
         }
 
+        .info-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .info-section h2 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .info-card {
+            background: rgba(102, 126, 234, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+        }
+
+        .info-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .info-card h3 {
+            font-size: 1.25rem;
+            color: #667eea;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .info-card p {
+            color: #666;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .info-card a {
+            color: #667eea;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .info-card code {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
         .footer {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
@@ -362,6 +431,10 @@
             color: #667eea;
             text-decoration: none;
             font-weight: 500;
+        }
+
+        .footer strong {
+            color: #667eea;
         }
 
         @media (max-width: 768px) {
@@ -400,9 +473,9 @@
             </div>
             <nav class="nav-links">
                 <a href="#chat">Chat</a>
+                <a href="#about">About</a>
                 <a href="/docs" target="_blank">API Docs</a>
                 <a href="/metrics" target="_blank">Metrics</a>
-                <a href="https://github.com/roger-rkd" target="_blank">GitHub</a>
             </nav>
         </div>
     </header>
@@ -468,11 +541,42 @@
                 <button class="send-btn" id="sendBtn" onclick="sendMessage()">Send</button>
             </div>
         </section>
+
+        <section class="info-section" id="about">
+            <h2>About This Service</h2>
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🤖</div>
+                    <h3>What It Does</h3>
+                    <p>This AI-powered chatbot answers support questions by searching through your company's FAQ documents (in .txt or .pdf format) and generating accurate, contextual responses.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📊</div>
+                    <h3>Metrics Dashboard</h3>
+                    <p>The <a href="/metrics" target="_blank">Metrics</a> page shows real-time performance data like request counts, response times, and system health - useful for monitoring service quality.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🔌</div>
+                    <h3>API Integration</h3>
+                    <p>Developers can integrate this service into their apps using the <a href="/docs" target="_blank">API Documentation</a>. Send questions programmatically and receive AI-generated answers.</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">📄</div>
+                    <h3>Adding Your FAQs</h3>
+                    <p>Place your company's FAQ files (.txt or .pdf) in the <code>/data</code> folder. The system automatically learns from them and uses that knowledge to answer questions.</p>
+                </div>
+            </div>
+        </section>
     </div>
 
     <footer class="footer">
+        <p>Made with ❤️ by <strong>Rohit Kumar Dubey</strong></p>
         <p>Powered by <a href="https://groq.com" target="_blank">Groq</a>, <a href="https://www.sbert.net" target="_blank">Sentence Transformers</a>, and <a href="https://faiss.ai" target="_blank">FAISS</a></p>
-        <p>Built with ❤️ using FastAPI | <a href="https://huggingface.co/spaces/dubey-codes/ai-support-service" target="_blank">Hugging Face Space</a></p>
+        <p>
+            <a href="https://github.com/roger-rkd/ai-support-service" target="_blank">GitHub</a> |
+            <a href="https://huggingface.co/spaces/dubey-codes/ai-support-service" target="_blank">Hugging Face</a> |
+            <a href="/docs" target="_blank">API Documentation</a>
+        </p>
     </footer>
 
     <script>

@@ -8,6 +8,7 @@ import os
 from pathlib import Path
 import faiss
 import numpy as np
+from pypdf import PdfReader
 from app.rag.embedder import Embedder
 
 logger = logging.getLogger(__name__)
@@ -50,7 +51,7 @@ class DocumentRetriever:
 
     def _load_documents(self) -> List[str]:
         """
-        Load all text documents from the data directory
+        Load all text and PDF documents from the data directory
 
         Returns:
             List of document texts
@@ -61,24 +62,44 @@ class DocumentRetriever:
             logger.warning(f"Data directory {self.data_dir} does not exist")
             return documents
 
-        # Load all .txt files from data directory
+        # Load all .txt and .pdf files from data directory
         txt_files = list(self.data_dir.glob("*.txt"))
+        pdf_files = list(self.data_dir.glob("*.pdf"))
+        all_files = txt_files + pdf_files
 
-        if not txt_files:
-            logger.warning(f"No .txt files found in {self.data_dir}")
+        if not all_files:
+            logger.warning(f"No .txt or .pdf files found in {self.data_dir}")
             return documents
 
-        logger.info(f"Found {len(txt_files)} documents in {self.data_dir}")
+        logger.info(f"Found {len(txt_files)} .txt and {len(pdf_files)} .pdf files in {self.data_dir}")
 
+        # Load .txt files
         for txt_file in txt_files:
             try:
                 with open(txt_file, "r", encoding="utf-8") as f:
                     content = f.read().strip()
                     if content:
                         documents.append(content)
-                        logger.debug(f"Loaded document: {txt_file.name}")
+                        logger.debug(f"Loaded text document: {txt_file.name}")
             except Exception as e:
                 logger.error(f"Failed to load {txt_file}: {str(e)}")
+
+        # Load .pdf files
+        for pdf_file in pdf_files:
+            try:
+                reader = PdfReader(str(pdf_file))
+                pdf_text = ""
+                for page_num, page in enumerate(reader.pages):
+                    page_text = page.extract_text()
+                    if page_text:
+                        pdf_text += page_text + "\n"
+
+                content = pdf_text.strip()
+                if content:
+                    documents.append(content)
+                    logger.debug(f"Loaded PDF document: {pdf_file.name} ({len(reader.pages)} pages)")
+            except Exception as e:
+                logger.error(f"Failed to load PDF {pdf_file}: {str(e)}")
 
         logger.info(f"Successfully loaded {len(documents)} documents")
         return documents
