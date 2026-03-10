@@ -19,6 +19,12 @@ from app.gp_locator import (
     extract_uk_postcode,
     is_gp_locator_request,
 )
+from app.support_flows import (
+    build_appointment_answer,
+    build_postcode_memory_answer,
+    is_appointment_request,
+    is_postcode_memory_question,
+)
 from app.session_memory import (
     append_session_message,
     get_first_postcode,
@@ -32,29 +38,6 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
-
-
-def _is_postcode_memory_question(question: str) -> bool:
-    """Detect short memory questions about prior postcodes."""
-    normalized = question.casefold()
-    return (
-        ("remember" in normalized or "first" in normalized or "previous" in normalized)
-        and ("postcode" in normalized or "post code" in normalized)
-    )
-
-
-def _build_postcode_memory_answer(postcode: Optional[str]) -> str:
-    """Return a concise answer about remembered postcodes for this session."""
-    if postcode:
-        return (
-            f"Yes. The first postcode you shared in this chat was **{postcode}**.\n"
-            "- Send any postcode and I will return a **Google Maps** link for nearby GP practices."
-        )
-
-    return (
-        "I do not have a postcode saved in this current chat yet.\n"
-        "- Send a **postcode** and I will return a **Google Maps** link for nearby GP practices."
-    )
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -168,12 +151,14 @@ async def ask_question(request: QuestionRequest):
         postcode = extract_uk_postcode(request.question)
         remember_postcode(session_state, postcode)
 
-        if _is_postcode_memory_question(request.question):
-            answer = _build_postcode_memory_answer(get_first_postcode(session_state))
+        if is_postcode_memory_question(request.question):
+            answer = build_postcode_memory_answer(get_first_postcode(session_state))
         elif postcode:
             answer = build_gp_locator_answer(postcode)
             if session_state is not None:
                 session_state["pending_postcode_for_gp"] = False
+        elif is_appointment_request(request.question):
+            answer = build_appointment_answer(get_first_postcode(session_state))
         elif is_gp_locator_request(request.question):
             answer = build_gp_locator_answer(postcode)
             if session_state is not None:

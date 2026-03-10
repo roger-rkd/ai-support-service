@@ -6,6 +6,7 @@ from app.gp_locator import (
     is_gp_locator_request,
     is_postcode_only_message,
 )
+from app.support_flows import build_appointment_answer, is_appointment_request
 from app.session_memory import (
     append_session_message,
     get_first_postcode,
@@ -15,6 +16,15 @@ from app.session_memory import (
 
 
 class GpLocatorTests(unittest.TestCase):
+    def test_detects_appointment_request(self):
+        self.assertTrue(is_appointment_request("help me book appointments"))
+        self.assertFalse(is_appointment_request("What are home remedies for a cold?"))
+
+    def test_appointment_answer_mentions_postcode_help(self):
+        answer = build_appointment_answer(None)
+        self.assertIn("postcode", answer.lower())
+        self.assertIn("111", answer)
+
     def test_detects_gp_locator_request(self):
         self.assertTrue(is_gp_locator_request("Find my nearest GP practice"))
         self.assertFalse(is_gp_locator_request("What are home remedies for a cold?"))
