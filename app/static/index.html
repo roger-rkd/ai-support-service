@@ -5,10 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NHS AI Health Assistant - Virtual Healthcare Support</title>
     <script>
+        function forcePageTop() {
+            document.documentElement.scrollTop = 0;
+            document.body.scrollTop = 0;
+            window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+        }
+
         if ('scrollRestoration' in history) {
             history.scrollRestoration = 'manual';
         }
-        window.scrollTo(0, 0);
+
+        forcePageTop();
+        window.addEventListener('pageshow', forcePageTop);
+        window.addEventListener('load', () => {
+            forcePageTop();
+            setTimeout(forcePageTop, 0);
+            setTimeout(forcePageTop, 150);
+        });
+
+        if (document.fonts?.ready) {
+            document.fonts.ready.then(() => {
+                forcePageTop();
+                requestAnimationFrame(forcePageTop);
+            });
+        }
     </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1582,7 +1602,9 @@
             getOrCreateSessionId();
             restoreMessages();
             backfillRememberedPostcodesFromTranscript();
-            requestAnimationFrame(() => window.scrollTo(0, 0));
+            forcePageTop();
+            requestAnimationFrame(forcePageTop);
+            setTimeout(forcePageTop, 0);
         });
     </script>
 </body>
