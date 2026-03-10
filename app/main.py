@@ -18,6 +18,7 @@ from app.gp_locator import (
     build_gp_locator_answer,
     extract_uk_postcode,
     is_gp_locator_request,
+    is_postcode_only_message,
 )
 from app.session_memory import append_session_message, get_session_state
 
@@ -146,6 +147,10 @@ async def ask_question(request: QuestionRequest):
         elif session_state is not None and session_state["pending_postcode_for_gp"] and postcode:
             answer = build_gp_locator_answer(postcode)
             session_state["pending_postcode_for_gp"] = False
+        elif postcode and is_postcode_only_message(request.question):
+            answer = build_gp_locator_answer(postcode)
+            if session_state is not None:
+                session_state["pending_postcode_for_gp"] = False
         else:
             # Use RAG pipeline to generate answer
             with metrics.MetricsTimer(metrics.rag_pipeline_latency):

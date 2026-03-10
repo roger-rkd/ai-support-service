@@ -4,6 +4,7 @@ from app.gp_locator import (
     build_gp_locator_answer,
     extract_uk_postcode,
     is_gp_locator_request,
+    is_postcode_only_message,
 )
 from app.session_memory import append_session_message, get_session_state
 
@@ -23,6 +24,10 @@ class GpLocatorTests(unittest.TestCase):
         answer = build_gp_locator_answer(None)
         self.assertIn("postcode", answer.lower())
         self.assertNotIn("google.com/maps", answer)
+
+    def test_detects_postcode_only_message(self):
+        self.assertTrue(is_postcode_only_message("g3 8qp"))
+        self.assertFalse(is_postcode_only_message("find a GP near g3 8qp"))
 
     def test_returns_google_maps_link_when_postcode_present(self):
         answer = build_gp_locator_answer("SW1A 1AA")

@@ -32,6 +32,17 @@ def is_gp_locator_request(question: str) -> bool:
     )
 
 
+def is_postcode_only_message(question: str) -> bool:
+    """Detect whether the user's message is effectively just a postcode."""
+    postcode = extract_uk_postcode(question)
+    if not postcode:
+        return False
+
+    normalized = re.sub(r"[^A-Z0-9]", "", question.upper())
+    postcode_compact = re.sub(r"[^A-Z0-9]", "", postcode)
+    return normalized == postcode_compact
+
+
 def build_gp_locator_answer(postcode: Optional[str]) -> str:
     """Return a deterministic response for nearby GP requests."""
     if not postcode:
