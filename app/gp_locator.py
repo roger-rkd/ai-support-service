@@ -56,6 +56,6 @@ def build_gp_locator_answer(postcode: Optional[str]) -> str:
     maps_link = f"https://www.google.com/maps/search/?api=1&query={maps_query}"
     return (
         f"Nearest GP search for **{postcode}**:\n"
-        f"- **Google Maps:** {maps_link}\n"
-        "- Send another **postcode** for a new search."
+        f"- **Click here to find your nearest GP:** {maps_link}\n"
+        "- Alternatively, call **NHS 24 on 111** to book your appointment."
     )
