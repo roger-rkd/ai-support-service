@@ -8,12 +8,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response, FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
-from typing import Optional
 import logging
 import time
 import os
 from app.rag.pipeline import ask
 from app.observability import metrics
+from app.gp_locator import (
+    build_gp_locator_answer,
+    extract_uk_postcode,
+    is_gp_locator_request,
+)
 
 # Configure logging
 logging.basicConfig(
@@ -127,9 +131,12 @@ async def ask_question(request: QuestionRequest):
     try:
         logger.info(f"Question received: {request.question[:50]}...")
 
-        # Use RAG pipeline to generate answer
-        with metrics.MetricsTimer(metrics.rag_pipeline_latency):
-            answer = ask(request.question)
+        if is_gp_locator_request(request.question):
+            answer = build_gp_locator_answer(extract_uk_postcode(request.question))
+        else:
+            # Use RAG pipeline to generate answer
+            with metrics.MetricsTimer(metrics.rag_pipeline_latency):
+                answer = ask(request.question)
 
         # Record successful request
         latency = time.time() - start_time
