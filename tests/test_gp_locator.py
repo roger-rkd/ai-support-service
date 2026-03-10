@@ -6,7 +6,12 @@ from app.gp_locator import (
     is_gp_locator_request,
     is_postcode_only_message,
 )
-from app.session_memory import append_session_message, get_session_state
+from app.session_memory import (
+    append_session_message,
+    get_first_postcode,
+    get_session_state,
+    remember_postcode,
+)
 
 
 class GpLocatorTests(unittest.TestCase):
@@ -48,6 +53,14 @@ class GpLocatorTests(unittest.TestCase):
         append_session_message(session_state, "user", "g3 8qp")
         append_session_message(session_state, "assistant", answer)
         self.assertEqual(len(session_state["messages"]), 2)
+
+    def test_session_memory_remembers_first_postcode(self):
+        session_state = get_session_state("memory-session")
+        session_state["postcodes"] = []
+        remember_postcode(session_state, "G3 8QP")
+        remember_postcode(session_state, "SW1A 1AA")
+
+        self.assertEqual(get_first_postcode(session_state), "G3 8QP")
 
 
 if __name__ == "__main__":

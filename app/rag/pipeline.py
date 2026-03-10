@@ -50,7 +50,7 @@ def _initialize_components():
         logger.info("RAG components initialized successfully")
 
 
-def _build_prompt(question: str, contexts: list) -> str:
+def _build_prompt(question: str, contexts: list, conversation_history: Optional[list] = None) -> str:
     """
     Build the prompt for the LLM with retrieved contexts
 
@@ -61,6 +61,15 @@ def _build_prompt(question: str, contexts: list) -> str:
     Returns:
         Formatted prompt string
     """
+    history_text = ""
+    if conversation_history:
+        recent_history = conversation_history[-6:]
+        history_lines = [
+            f"{message['role'].capitalize()}: {message['content']}"
+            for message in recent_history
+        ]
+        history_text = "\n\nRECENT CHAT HISTORY:\n" + "\n".join(history_lines)
+
     if not contexts:
         return f"""You are an NHS AI Health Assistant providing general medical information and support. Be warm, empathetic, and caring in your responses. Always remind patients that you're an AI providing general information only, not a doctor.
 
@@ -71,9 +80,11 @@ IMPORTANT SAFETY GUIDELINES:
 - Never diagnose or prescribe medications
 - Provide evidence-based information from NHS guidelines
 
+{history_text}
+
 Question: {question}
 
-Answer: (Provide a warm, helpful response with appropriate safety advice)"""
+Answer: (Provide a short, helpful response with appropriate safety advice)"""
 
     # Format contexts
     context_text = "\n\n".join([
@@ -107,6 +118,8 @@ SAFETY FIRST:
 NHS CONTEXT DOCUMENTS:
 {context_text}
 
+{history_text}
+
 Patient's Question: {question}
 
 Your Response: (Be warm and empathetic, provide concise helpful information with bolded keywords, include appropriate safety guidance)"""
@@ -114,7 +127,7 @@ Your Response: (Be warm and empathetic, provide concise helpful information with
     return prompt
 
 
-def ask(question: str, top_k: int = 3) -> str:
+def ask(question: str, conversation_history: Optional[list] = None, top_k: int = 3) -> str:
     """
     Main RAG pipeline function - retrieves relevant documents and generates answer
 
@@ -151,7 +164,7 @@ def ask(question: str, top_k: int = 3) -> str:
             metrics.record_documents_retrieved(0)
 
         # Step 2: Build prompt with context
-        prompt = _build_prompt(question, contexts)
+        prompt = _build_prompt(question, contexts, conversation_history)
 
         # Step 3: Generate answer using Groq
         logger.debug("Generating answer with Groq")
@@ -164,7 +177,7 @@ def ask(question: str, top_k: int = 3) -> str:
 
 1. **NEVER USE PARAGRAPHS**: Always format responses as bullet points or numbered lists. This is CRITICAL for readability.
 
-2. **BE CONCISE**: Keep responses SHORT (max 6-8 bullet points). Patients want quick, clear answers.
+2. **BE CONCISE**: Keep responses VERY SHORT (2-4 bullet points, under 60 words when possible).
 
 3. **HIGHLIGHT KEYWORDS**: Use **bold** formatting for important words:
    - Symptoms: **fever**, **headache**, **cough**

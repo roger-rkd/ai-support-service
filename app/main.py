@@ -18,9 +18,13 @@ from app.gp_locator import (
     build_gp_locator_answer,
     extract_uk_postcode,
     is_gp_locator_request,
-    is_postcode_only_message,
 )
-from app.session_memory import append_session_message, get_session_state
+from app.session_memory import (
+    append_session_message,
+    get_first_postcode,
+    get_session_state,
+    remember_postcode,
+)
 
 # Configure logging
 logging.basicConfig(
@@ -28,6 +32,29 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 )
 logger = logging.getLogger(__name__)
+
+
+def _is_postcode_memory_question(question: str) -> bool:
+    """Detect short memory questions about prior postcodes."""
+    normalized = question.casefold()
+    return (
+        ("remember" in normalized or "first" in normalized or "previous" in normalized)
+        and ("postcode" in normalized or "post code" in normalized)
+    )
+
+
+def _build_postcode_memory_answer(postcode: Optional[str]) -> str:
+    """Return a concise answer about remembered postcodes for this session."""
+    if postcode:
+        return (
+            f"Yes. The first postcode you shared in this chat was **{postcode}**.\n"
+            "- Send any postcode and I will return a **Google Maps** link for nearby GP practices."
+        )
+
+    return (
+        "I do not have a postcode saved in this current chat yet.\n"
+        "- Send a **postcode** and I will return a **Google Maps** link for nearby GP practices."
+    )
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -139,22 +166,25 @@ async def ask_question(request: QuestionRequest):
         logger.info(f"Question received: {request.question[:50]}...")
         session_state = get_session_state(request.session_id)
         postcode = extract_uk_postcode(request.question)
+        remember_postcode(session_state, postcode)
 
-        if is_gp_locator_request(request.question):
+        if _is_postcode_memory_question(request.question):
+            answer = _build_postcode_memory_answer(get_first_postcode(session_state))
+        elif postcode:
+            answer = build_gp_locator_answer(postcode)
+            if session_state is not None:
+                session_state["pending_postcode_for_gp"] = False
+        elif is_gp_locator_request(request.question):
             answer = build_gp_locator_answer(postcode)
             if session_state is not None:
                 session_state["pending_postcode_for_gp"] = postcode is None
         elif session_state is not None and session_state["pending_postcode_for_gp"] and postcode:
             answer = build_gp_locator_answer(postcode)
             session_state["pending_postcode_for_gp"] = False
-        elif postcode and is_postcode_only_message(request.question):
-            answer = build_gp_locator_answer(postcode)
-            if session_state is not None:
-                session_state["pending_postcode_for_gp"] = False
         else:
             # Use RAG pipeline to generate answer
             with metrics.MetricsTimer(metrics.rag_pipeline_latency):
-                answer = ask(request.question)
+                answer = ask(request.question, session_state["messages"] if session_state else None)
 
         append_session_message(session_state, "user", request.question)
         append_session_message(session_state, "assistant", answer)

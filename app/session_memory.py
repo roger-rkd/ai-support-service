@@ -9,6 +9,7 @@ SESSION_STATE = defaultdict(
     lambda: {
         "messages": [],
         "pending_postcode_for_gp": False,
+        "postcodes": [],
     }
 )
 
@@ -27,3 +28,17 @@ def append_session_message(session_state: Optional[dict], role: str, content: st
     session_state["messages"].append({"role": role, "content": content})
     if len(session_state["messages"]) > MAX_SESSION_MESSAGES:
         session_state["messages"] = session_state["messages"][-MAX_SESSION_MESSAGES:]
+
+
+def remember_postcode(session_state: Optional[dict], postcode: Optional[str]) -> None:
+    """Store postcodes seen in this browser session."""
+    if session_state is None or not postcode:
+        return
+    session_state["postcodes"].append(postcode)
+
+
+def get_first_postcode(session_state: Optional[dict]) -> Optional[str]:
+    """Return the first postcode seen in the active browser session."""
+    if session_state is None or not session_state["postcodes"]:
+        return None
+    return session_state["postcodes"][0]

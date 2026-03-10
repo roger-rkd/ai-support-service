@@ -47,16 +47,15 @@ def build_gp_locator_answer(postcode: Optional[str]) -> str:
     """Return a deterministic response for nearby GP requests."""
     if not postcode:
         return (
-            "I can help with **GP location assistance**.\n"
-            "- Please send your **postcode** so I can generate a **Google Maps** link for nearby GP practices.\n"
-            "- For example, you can reply with **SW1A 1AA**."
+            "Send your **postcode**.\n"
+            "- I will return a **Google Maps** link for nearby GP practices.\n"
+            "- Example: **SW1A 1AA**."
         )
 
     maps_query = quote_plus(f"GP practice near {postcode}")
     maps_link = f"https://www.google.com/maps/search/?api=1&query={maps_query}"
     return (
-        "I can help with **GP location assistance**.\n"
-        f"- I found the postcode **{postcode}** in your message.\n"
-        f"- Open this **Google Maps** search for nearby GP practices: {maps_link}\n"
-        "- If you want, I can also help with **appointment assistance** after you choose a surgery."
+        f"Nearest GP search for **{postcode}**:\n"
+        f"- **Google Maps:** {maps_link}\n"
+        "- Send another **postcode** for a new search."
     )
