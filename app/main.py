@@ -29,6 +29,7 @@ from app.session_memory import (
     append_session_message,
     get_first_postcode,
     get_session_state,
+    hydrate_postcodes,
     remember_postcode,
 )
 
@@ -76,6 +77,10 @@ class QuestionRequest(BaseModel):
         default=None,
         max_length=128,
         description="Optional client session identifier for short-lived chat memory",
+    )
+    remembered_postcodes: list[str] = Field(
+        default_factory=list,
+        description="Postcodes remembered by the browser session",
     )
 
     class Config:
@@ -148,6 +153,7 @@ async def ask_question(request: QuestionRequest):
     try:
         logger.info(f"Question received: {request.question[:50]}...")
         session_state = get_session_state(request.session_id)
+        hydrate_postcodes(session_state, request.remembered_postcodes)
         postcode = extract_uk_postcode(request.question)
         remember_postcode(session_state, postcode)
 

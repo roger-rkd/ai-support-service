@@ -37,6 +37,13 @@ def remember_postcode(session_state: Optional[dict], postcode: Optional[str]) ->
     session_state["postcodes"].append(postcode)
 
 
+def hydrate_postcodes(session_state: Optional[dict], postcodes: Optional[list[str]]) -> None:
+    """Restore remembered postcodes from the browser session payload."""
+    if session_state is None or not postcodes:
+        return
+    session_state["postcodes"] = list(postcodes)
+
+
 def get_first_postcode(session_state: Optional[dict]) -> Optional[str]:
     """Return the first postcode seen in the active browser session."""
     if session_state is None or not session_state["postcodes"]:

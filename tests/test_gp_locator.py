@@ -11,6 +11,7 @@ from app.session_memory import (
     append_session_message,
     get_first_postcode,
     get_session_state,
+    hydrate_postcodes,
     remember_postcode,
 )
 
@@ -69,6 +70,12 @@ class GpLocatorTests(unittest.TestCase):
         session_state["postcodes"] = []
         remember_postcode(session_state, "G3 8QP")
         remember_postcode(session_state, "SW1A 1AA")
+
+        self.assertEqual(get_first_postcode(session_state), "G3 8QP")
+
+    def test_hydrate_postcodes_restores_browser_memory(self):
+        session_state = get_session_state("hydrated-session")
+        hydrate_postcodes(session_state, ["G3 8QP", "SW1A 1AA"])
 
         self.assertEqual(get_first_postcode(session_state), "G3 8QP")
 

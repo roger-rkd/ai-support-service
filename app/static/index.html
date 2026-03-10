@@ -1243,6 +1243,7 @@
         const CHAT_SESSION_KEY = 'aiSupportSessionId';
         const CHAT_HISTORY_KEY = 'aiSupportMessageHistory';
         const CHAT_MESSAGE_COUNT_KEY = 'aiSupportMessageCount';
+        const CHAT_POSTCODES_KEY = 'aiSupportRememberedPostcodes';
         let messageCount = Number(sessionStorage.getItem(CHAT_MESSAGE_COUNT_KEY) || '0');
 
         // SVG icons for avatars
@@ -1264,6 +1265,27 @@
             sessionStorage.setItem(CHAT_MESSAGE_COUNT_KEY, String(messageCount));
         }
 
+        function getRememberedPostcodes() {
+            try {
+                return JSON.parse(sessionStorage.getItem(CHAT_POSTCODES_KEY) || '[]');
+            } catch {
+                return [];
+            }
+        }
+
+        function rememberPostcodeInBrowser(question) {
+            const postcodeMatch = question.match(/\b([A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2})\b/i);
+            if (!postcodeMatch) {
+                return;
+            }
+
+            const compact = postcodeMatch[1].toUpperCase().replace(/\s+/g, '');
+            const formatted = compact.length > 3 ? `${compact.slice(0, -3)} ${compact.slice(-3)}` : compact;
+            const remembered = getRememberedPostcodes();
+            remembered.push(formatted);
+            sessionStorage.setItem(CHAT_POSTCODES_KEY, JSON.stringify(remembered));
+        }
+
         function restoreMessages() {
             const savedMessages = sessionStorage.getItem(CHAT_HISTORY_KEY);
             if (!savedMessages) {
@@ -1283,6 +1305,7 @@
         }
 
         async function askQuestion(question) {
+            rememberPostcodeInBrowser(question);
             addMessage(question, 'user');
 
             questionInput.disabled = true;
@@ -1298,7 +1321,8 @@
                     },
                     body: JSON.stringify({
                         question: question,
-                        session_id: getOrCreateSessionId()
+                        session_id: getOrCreateSessionId(),
+                        remembered_postcodes: getRememberedPostcodes()
                     })
                 });
 
