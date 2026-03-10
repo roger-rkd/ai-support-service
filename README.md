@@ -1,5 +1,5 @@
 ---
-title: AI Support Service
+title: AI Powered NHS Health Assistant 🏥🩺
 emoji: 🤖
 colorFrom: blue
 colorTo: purple
