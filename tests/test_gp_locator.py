@@ -5,6 +5,7 @@ from app.gp_locator import (
     extract_uk_postcode,
     is_gp_locator_request,
 )
+from app.session_memory import append_session_message, get_session_state
 
 
 class GpLocatorTests(unittest.TestCase):
@@ -28,6 +29,20 @@ class GpLocatorTests(unittest.TestCase):
         self.assertIn("SW1A 1AA", answer)
         self.assertIn("google.com/maps/search/", answer)
         self.assertIn("GP+practice+near+SW1A+1AA", answer)
+
+    def test_session_state_tracks_pending_postcode_follow_up(self):
+        session_state = get_session_state("test-session")
+        session_state["pending_postcode_for_gp"] = True
+        postcode = extract_uk_postcode("g3 8qp")
+
+        self.assertEqual(postcode, "G3 8QP")
+        answer = build_gp_locator_answer(postcode)
+
+        self.assertIn("google.com/maps/search/", answer)
+        self.assertIn("G3 8QP", answer)
+        append_session_message(session_state, "user", "g3 8qp")
+        append_session_message(session_state, "assistant", answer)
+        self.assertEqual(len(session_state["messages"]), 2)
 
 
 if __name__ == "__main__":

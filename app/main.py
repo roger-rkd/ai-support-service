@@ -8,6 +8,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response, FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
+from typing import Optional
 import logging
 import time
 import os
@@ -18,6 +19,7 @@ from app.gp_locator import (
     extract_uk_postcode,
     is_gp_locator_request,
 )
+from app.session_memory import append_session_message, get_session_state
 
 # Configure logging
 logging.basicConfig(
@@ -59,6 +61,11 @@ class QuestionRequest(BaseModel):
         max_length=1000,
         description="The question to be answered by the AI support system"
     )
+    session_id: Optional[str] = Field(
+        default=None,
+        max_length=128,
+        description="Optional client session identifier for short-lived chat memory",
+    )
 
     class Config:
         json_schema_extra = {
@@ -66,7 +73,6 @@ class QuestionRequest(BaseModel):
                 "question": "How do I reset my password?"
             }
         }
-
 
 class AnswerResponse(BaseModel):
     """Response model for answers"""
@@ -130,13 +136,23 @@ async def ask_question(request: QuestionRequest):
 
     try:
         logger.info(f"Question received: {request.question[:50]}...")
+        session_state = get_session_state(request.session_id)
+        postcode = extract_uk_postcode(request.question)
 
         if is_gp_locator_request(request.question):
-            answer = build_gp_locator_answer(extract_uk_postcode(request.question))
+            answer = build_gp_locator_answer(postcode)
+            if session_state is not None:
+                session_state["pending_postcode_for_gp"] = postcode is None
+        elif session_state is not None and session_state["pending_postcode_for_gp"] and postcode:
+            answer = build_gp_locator_answer(postcode)
+            session_state["pending_postcode_for_gp"] = False
         else:
             # Use RAG pipeline to generate answer
             with metrics.MetricsTimer(metrics.rag_pipeline_latency):
                 answer = ask(request.question)
+
+        append_session_message(session_state, "user", request.question)
+        append_session_message(session_state, "assistant", answer)
 
         # Record successful request
         latency = time.time() - start_time
